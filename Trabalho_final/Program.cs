@@ -5,21 +5,134 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CineTech
+
 {
+    class Vendas
+    {
+        public void VenderProdutos(string[,] spMatrizDeProdutos,string[,]spMatrizDeClientes)
+        {
+            
+            string cpf;
+            Console.Clear();
+            Console.WriteLine("Digite o cpf. XXX.XXXX.XXX-XX");
+            cpf = Console.ReadLine();
+
+            ConfirmarSeOClienteECadastrado(spMatrizDeClientes, cpf);
+            ListarProdutos(spMatrizDeProdutos);
+            OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes);
+
+            Console.ReadKey();
+
+        }
+        public void OperacaoDeVenda(string[,]spMatrizDeProdutos,string[,] spMatrizClientes)
+        {
+            string codigo;
+            int estoqueDoProduto,precoTotal = 0,troco,dinheiroDocliente;
+            string[,] resumoDaCompra = new string[100, 3];
+            
+            ConsoleKeyInfo TeclaDeSair;
+            Console.Clear();
+            do
+            {
+
+                Console.WriteLine("Digite o codigo do produto");
+                              
+                codigo = Console.ReadLine();
+
+                for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
+                {
+                    if (spMatrizDeProdutos[i, 0] == codigo)
+                    {
+
+                        Console.WriteLine("Nome: {0}", spMatrizDeProdutos[i, 1]);
+                        precoTotal += Convert.ToInt32(spMatrizDeProdutos[i, 2]);
+                        estoqueDoProduto = Convert.ToInt32(spMatrizDeProdutos[i, 3]);
+                        estoqueDoProduto -= 1;
+                        spMatrizDeProdutos[i, 3]= Convert.ToString(estoqueDoProduto);
+                    }
+             }
+                Console.WriteLine("Para adicionar mais um produto aperte enter");
+                Console.WriteLine("Para finalizar a compra aperte f5");
+                TeclaDeSair = Console.ReadKey();
+
+
+
+
+
+
+
+
+
+            } while (TeclaDeSair.Key != ConsoleKey.F5);
+            Console.WriteLine("Operacao Finalizada");
+            ResumoDaCompra(resumoDaCompra);
+            Console.WriteLine("Digite o ");
+
+            }
+        public void ResumoDaCompra(string[,] spResumoDacompra)
+        {
+
+        }
+        public void ListarProdutos(string[,] spMatrizDeProdutos)
+        {
+            for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
+            {
+                Console.WriteLine("Lista de Produtos");
+                Console.WriteLine("Código de cadastro: {0}", spMatrizDeProdutos[i, 0]);
+                Console.WriteLine("Nome: {0}", spMatrizDeProdutos[i, 1]);
+                Console.WriteLine("Preço: R${0}", spMatrizDeProdutos[i, 2]);
+                Console.WriteLine("Quantidade em estoque: {0}", spMatrizDeProdutos[i, 3]);
+                Console.WriteLine("Descrição: {0}", spMatrizDeProdutos[i, 4]);
+                Console.WriteLine();
+            }
+        }
+        public void ConfirmarSeOClienteECadastrado(string[,] pMatrizClientes, string pCpf)
+        {
+
+
+            for (int i = 0; i < pMatrizClientes.GetLength(0); i++)
+            {
+                if (pMatrizClientes[i, 0] == pCpf)
+                {
+                    Console.WriteLine("Cliente Cadastrado");
+                    Console.WriteLine("Nome: {0}", pMatrizClientes[i, 1]);
+                    Console.WriteLine("Telefone: {0}", pMatrizClientes[i, 2]);
+                    Console.WriteLine("Cidade: {0}", pMatrizClientes[i, 3]);
+                }
+                else
+                {
+                    //CHAMAR CADASTRO DE CLIENTE
+                }
+            }
+            //AINDA FALTA COLOCAR TELA DOS PRODUTOS,CALCULAR O PRECO DA COMPRA.
+            Console.ReadKey();
+        }
+    }
+    class GestaoFinanceira
+    {
+        DateTime dataAtual = DateTime.Now;
+        string[,] MatrizDeProdutosComprados = new string[100, 100];
+        string[,] MatrizCliente = new string[100, 100];
+
+
+
+
+
+    }
     class Menu
     {
-        public void AberturaDeMenus(int pAutentificacao, string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizProdutos, ref int plinhaMatrizProdutos)
+        public void AberturaDeMenus(int pAutentificacao, string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes)
         {
             if (pAutentificacao == 1)
             {
-                MenuAdministracao(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+                MenuAdministracao(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
             }
             else if (pAutentificacao == 2)
             {
-                MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+                MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
             }
         }
-        public void MenuAdministracao(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizProdutos, ref int plinhaMatrizProdutos)
+        public void MenuAdministracao(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes)
         {
             Login MetodosDeInicializacao = new Login();
             bool condicao = true;
@@ -53,7 +166,7 @@ namespace CineTech
                         {
                             MetodosDeInicializacao.TelaDeAbertura();
                             MetodosDeInicializacao.TelaDeCarregamento();
-                            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+                            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
                             condicao = false;
 
                             break;
@@ -72,9 +185,9 @@ namespace CineTech
             } while (condicao);
             MetodosDeInicializacao.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
-            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
         }
-        public void MenuFuncionarios(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizProdutos, ref int plinhaMatrizProdutos)
+        public void MenuFuncionarios(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes)
         {
             Login MetodosDeInicializacao = new Login();
             ConsoleKeyInfo lertecla;
@@ -93,7 +206,9 @@ namespace CineTech
                 Console.WriteLine();
                 Console.WriteLine("F3) Gestão de Produtos");
                 Console.WriteLine();
-                Console.WriteLine("F4) Retornar à tela de Login");
+                Console.WriteLine("F4) Operacao de vendas");
+                Console.WriteLine();
+                Console.WriteLine("F5) Retornar à tela de Login");
                 lertecla = Console.ReadKey();
 
                 switch (lertecla.Key)
@@ -122,11 +237,17 @@ namespace CineTech
                         {
                             do
                             {
-                                GestaoProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+                                GestaoProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
                             } while (lertecla.Key != ConsoleKey.F5);
                             break;
                         }
                     case ConsoleKey.F4:
+                        {
+                            Vendas metodosParaOperacaoDeVendas = new Vendas();
+                            metodosParaOperacaoDeVendas.VenderProdutos(spMatrizDeProdutos,spMatrizDeClientes);
+                            break;
+                        }
+                    case ConsoleKey.F5:
                         {
                             condicao = false;
                             break;
@@ -146,10 +267,10 @@ namespace CineTech
 
             MetodosDeInicializacao.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
-            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
         }
 
-        public void GestaoProdutos(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizProdutos, ref int plinhaMatrizProdutos)
+        public void GestaoProdutos(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes)
         {
             ConsoleKeyInfo lertecla;
             Random nrandom = new Random();
@@ -187,11 +308,11 @@ namespace CineTech
                         Console.WriteLine("==========================================================================");
 
                         codigo = plinhaMatrizProdutos;
-                        spMatrizProdutos[plinhaMatrizProdutos, 0] = codigo.ToString();
+                        spMatrizDeProdutos[plinhaMatrizProdutos, 0] = codigo.ToString();
 
                         Console.Write("Informe o nome do produto: ");
                         nome = Console.ReadLine();
-                        spMatrizProdutos[plinhaMatrizProdutos, 1] = nome;
+                        spMatrizDeProdutos[plinhaMatrizProdutos, 1] = nome;
 
                         Console.WriteLine();
                         Console.Write("Informe o preço do produto: ");
@@ -207,14 +328,14 @@ namespace CineTech
                                 if (preçoteste > 0)
                                 {
                                     preço = preçoteste.ToString();
-                                    spMatrizProdutos[plinhaMatrizProdutos, 2] = preço;
+                                    spMatrizDeProdutos[plinhaMatrizProdutos, 2] = preço;
                                 }
                             } while (preçoteste <= 0);
                         }
                         else
                         {
                             preço = preçoteste.ToString();
-                            spMatrizProdutos[plinhaMatrizProdutos, 2] = preço;
+                            spMatrizDeProdutos[plinhaMatrizProdutos, 2] = preço;
                         }
 
                         Console.WriteLine();
@@ -231,28 +352,28 @@ namespace CineTech
                                 if (quantidadeteste >= 0)
                                 {
                                     quantidade = quantidadeteste.ToString();
-                                    spMatrizProdutos[plinhaMatrizProdutos, 3] = quantidade;
+                                    spMatrizDeProdutos[plinhaMatrizProdutos, 3] = quantidade;
                                 }
                             } while (quantidadeteste < 0);
                         }
                         else
                         {
                             quantidade = quantidadeteste.ToString();
-                            spMatrizProdutos[plinhaMatrizProdutos, 3] = quantidade;
+                            spMatrizDeProdutos[plinhaMatrizProdutos, 3] = quantidade;
                         }
 
                         Console.WriteLine();
                         Console.Write("Informe a descrição do produto: ");
                         descricao = Console.ReadLine();
-                        spMatrizProdutos[plinhaMatrizProdutos, 4] = descricao;
+                        spMatrizDeProdutos[plinhaMatrizProdutos, 4] = descricao;
 
                         Console.WriteLine();
                         Console.WriteLine("Produto registrado com sucesso!");
-                        Console.WriteLine("Código de cadastro: {0}", spMatrizProdutos[plinhaMatrizProdutos, 0]);
-                        Console.WriteLine("Nome: {0}", spMatrizProdutos[plinhaMatrizProdutos, 1]);
-                        Console.WriteLine("Preço: R${0}", spMatrizProdutos[plinhaMatrizProdutos, 2]);
-                        Console.WriteLine("Quantidade em estoque: {0}", spMatrizProdutos[plinhaMatrizProdutos, 3]);
-                        Console.WriteLine("Descrição: {0}", spMatrizProdutos[plinhaMatrizProdutos, 4]);
+                        Console.WriteLine("Código de cadastro: {0}", spMatrizDeProdutos[plinhaMatrizProdutos, 0]);
+                        Console.WriteLine("Nome: {0}", spMatrizDeProdutos[plinhaMatrizProdutos, 1]);
+                        Console.WriteLine("Preço: R${0}", spMatrizDeProdutos[plinhaMatrizProdutos, 2]);
+                        Console.WriteLine("Quantidade em estoque: {0}", spMatrizDeProdutos[plinhaMatrizProdutos, 3]);
+                        Console.WriteLine("Descrição: {0}", spMatrizDeProdutos[plinhaMatrizProdutos, 4]);
                         Console.WriteLine();
                         Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de produtos.");
                         Console.ReadKey();
@@ -268,17 +389,17 @@ namespace CineTech
                         Console.WriteLine("==========================================================================");
                         Console.Write("Informe o código do produto que deseja editar: ");
                         editar = Console.ReadLine();
-                        for (int i = 0; i < spMatrizProdutos.GetLength(0); i++)
+                        for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
                         {
-                            if (spMatrizProdutos[i, 0] == editar)
+                            if (spMatrizDeProdutos[i, 0] == editar)
                             {
                                 conteditar++;
                                 Console.WriteLine("Produto encontrado! Cadastro atual: ");
-                                Console.WriteLine("Código de cadastro: {0}", spMatrizProdutos[i, 0]);
-                                Console.WriteLine("Nome: {0}", spMatrizProdutos[i, 1]);
-                                Console.WriteLine("Preço: R${0}", spMatrizProdutos[i, 2]);
-                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizProdutos[i, 3]);
-                                Console.WriteLine("Descrição: {0}", spMatrizProdutos[i, 4]);
+                                Console.WriteLine("Código de cadastro: {0}", spMatrizDeProdutos[i, 0]);
+                                Console.WriteLine("Nome: {0}", spMatrizDeProdutos[i, 1]);
+                                Console.WriteLine("Preço: R${0}", spMatrizDeProdutos[i, 2]);
+                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizDeProdutos[i, 3]);
+                                Console.WriteLine("Descrição: {0}", spMatrizDeProdutos[i, 4]);
                                 Console.WriteLine();
                                 Console.WriteLine("Pressione a tecla referente ao campo que deseja editar deste produto:");
                                 Console.WriteLine();
@@ -298,7 +419,7 @@ namespace CineTech
                                         {
                                             Console.Write("Informe o novo nome do produto: ");
                                             nome = Console.ReadLine();
-                                            spMatrizProdutos[i, 1] = nome;
+                                            spMatrizDeProdutos[i, 1] = nome;
                                             break;
                                         }
                                     case ConsoleKey.F2:
@@ -317,14 +438,14 @@ namespace CineTech
                                                     if (preçoteste > 0)
                                                     {
                                                         preço = preçoteste.ToString();
-                                                        spMatrizProdutos[i, 2] = preço;
+                                                        spMatrizDeProdutos[i, 2] = preço;
                                                     }
                                                 } while (preçoteste <= 0);
                                             }
                                             else
                                             {
                                                 preço = preçoteste.ToString();
-                                                spMatrizProdutos[i, 2] = preço;
+                                                spMatrizDeProdutos[i, 2] = preço;
                                             }
                                             break;
                                         }
@@ -343,14 +464,14 @@ namespace CineTech
                                                     if (quantidadeteste >= 0)
                                                     {
                                                         quantidade = quantidadeteste.ToString();
-                                                        spMatrizProdutos[i, 3] = quantidade;
+                                                        spMatrizDeProdutos[i, 3] = quantidade;
                                                     }
                                                 } while (quantidadeteste < 0);
                                             }
                                             else
                                             {
                                                 quantidade = quantidadeteste.ToString();
-                                                spMatrizProdutos[i, 3] = quantidade;
+                                                spMatrizDeProdutos[i, 3] = quantidade;
                                             }
                                             break;
                                         }
@@ -358,7 +479,7 @@ namespace CineTech
                                         {
                                             Console.Write("Informe a nova descrição do produto: ");
                                             descricao = Console.ReadLine();
-                                            spMatrizProdutos[i, 4] = descricao;
+                                            spMatrizDeProdutos[i, 4] = descricao;
                                             break;
                                         }
                                 }
@@ -390,18 +511,18 @@ namespace CineTech
                         Console.WriteLine("==========================================================================");
                         Console.Write("Informe o código do produto que deseja excluir: ");
                         excluir = Console.ReadLine();
-                        for (int i = 0; i < spMatrizProdutos.GetLength(0); i++)
+                        for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
                         {
-                            if (spMatrizProdutos[i, 0] == excluir)
+                            if (spMatrizDeProdutos[i, 0] == excluir)
                             {
                                 conteditar++;
                                 Console.WriteLine();
                                 Console.WriteLine();
-                                Console.WriteLine("Código de cadastro: {0}", spMatrizProdutos[i, 0]);
-                                Console.WriteLine("Nome: {0}", spMatrizProdutos[i, 1]);
-                                Console.WriteLine("Preço: R${0}", spMatrizProdutos[i, 2]);
-                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizProdutos[i, 3]);
-                                Console.WriteLine("Descrição: {0}", spMatrizProdutos[i, 4]);
+                                Console.WriteLine("Código de cadastro: {0}", spMatrizDeProdutos[i, 0]);
+                                Console.WriteLine("Nome: {0}", spMatrizDeProdutos[i, 1]);
+                                Console.WriteLine("Preço: R${0}", spMatrizDeProdutos[i, 2]);
+                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizDeProdutos[i, 3]);
+                                Console.WriteLine("Descrição: {0}", spMatrizDeProdutos[i, 4]);
                                 Console.WriteLine();
                                 Console.WriteLine("Deseja mesmo excluir o cadastro demonstrado? (S/N) ");
                                 confirmaexcluir = Console.ReadLine().ToLower();
@@ -409,11 +530,11 @@ namespace CineTech
                                 {
                                     excluircodigo = Convert.ToInt32(excluir);
 
-                                    spMatrizProdutos[excluircodigo, 0] = null;
-                                    spMatrizProdutos[excluircodigo, 1] = null;
-                                    spMatrizProdutos[excluircodigo, 2] = null;
-                                    spMatrizProdutos[excluircodigo, 3] = null;
-                                    spMatrizProdutos[excluircodigo, 4] = null;
+                                    spMatrizDeProdutos[excluircodigo, 0] = null;
+                                    spMatrizDeProdutos[excluircodigo, 1] = null;
+                                    spMatrizDeProdutos[excluircodigo, 2] = null;
+                                    spMatrizDeProdutos[excluircodigo, 3] = null;
+                                    spMatrizDeProdutos[excluircodigo, 4] = null;
                                     Console.WriteLine();
                                     Console.WriteLine("Cadastro excluído.");
                                     Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de produtos.");
@@ -477,19 +598,19 @@ namespace CineTech
                                         Console.Write("Informe o nome do produto: ");
                                         nome = Console.ReadLine();
 
-                                        for (int i = 0; i < spMatrizProdutos.GetLength(0); i++)
+                                        for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
                                         {
-                                            if (spMatrizProdutos[i, 1] == nome)
+                                            if (spMatrizDeProdutos[i, 1] == nome)
                                             {
                                                 contnome++;
                                                 Console.WriteLine();
                                                 Console.WriteLine("Produto encontrado!");
                                                 Console.WriteLine();
-                                                Console.WriteLine("Código de cadastro: {0}", spMatrizProdutos[i, 0]);
-                                                Console.WriteLine("Nome: {0}", spMatrizProdutos[i, 1]);
-                                                Console.WriteLine("Preço: R${0}", spMatrizProdutos[i, 2]);
-                                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizProdutos[i, 3]);
-                                                Console.WriteLine("Descrição: {0}", spMatrizProdutos[i, 4]);
+                                                Console.WriteLine("Código de cadastro: {0}", spMatrizDeProdutos[i, 0]);
+                                                Console.WriteLine("Nome: {0}", spMatrizDeProdutos[i, 1]);
+                                                Console.WriteLine("Preço: R${0}", spMatrizDeProdutos[i, 2]);
+                                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizDeProdutos[i, 3]);
+                                                Console.WriteLine("Descrição: {0}", spMatrizDeProdutos[i, 4]);
                                                 Console.WriteLine();
                                                 Console.WriteLine("Pressione qualquer tecla para retornar ao menu de consulta.");
                                                 break;
@@ -515,19 +636,19 @@ namespace CineTech
                                         Console.Write("Informe o codigo do produto: ");
                                         codigoconsulta = Console.ReadLine();
 
-                                        for (int i = 0; i < spMatrizProdutos.GetLength(0); i++)
+                                        for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
                                         {
-                                            if (spMatrizProdutos[i, 0] == codigoconsulta)
+                                            if (spMatrizDeProdutos[i, 0] == codigoconsulta)
                                             {
                                                 contcodigo++;
                                                 Console.WriteLine();
                                                 Console.WriteLine("Produto encontrado!");
                                                 Console.WriteLine();
-                                                Console.WriteLine("Código de cadastro: {0}", spMatrizProdutos[i, 0]);
-                                                Console.WriteLine("Nome: {0}", spMatrizProdutos[i, 1]);
-                                                Console.WriteLine("Preço: R${0}", spMatrizProdutos[i, 2]);
-                                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizProdutos[i, 3]);
-                                                Console.WriteLine("Descrição: {0}", spMatrizProdutos[i, 4]);
+                                                Console.WriteLine("Código de cadastro: {0}", spMatrizDeProdutos[i, 0]);
+                                                Console.WriteLine("Nome: {0}", spMatrizDeProdutos[i, 1]);
+                                                Console.WriteLine("Preço: R${0}", spMatrizDeProdutos[i, 2]);
+                                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizDeProdutos[i, 3]);
+                                                Console.WriteLine("Descrição: {0}", spMatrizDeProdutos[i, 4]);
                                                 Console.WriteLine();
                                                 Console.WriteLine("Pressione qualquer tecla para retornar ao menu de consulta.");
                                                 break;
@@ -551,16 +672,16 @@ namespace CineTech
                                         Console.WriteLine("==========================================================================");
                                         Console.WriteLine();
                                         Console.WriteLine("Os seguintes produtos estão cadastrados no sistema:");
-                                        for (int i = 0; i < spMatrizProdutos.GetLength(0); i++)
+                                        for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
                                         {
-                                            if (spMatrizProdutos[i, 0] != null)
+                                            if (spMatrizDeProdutos[i, 0] != null)
                                             {
                                                 Console.WriteLine();
-                                                Console.WriteLine("Código de cadastro: {0}", spMatrizProdutos[i, 0]);
-                                                Console.WriteLine("Nome: {0}", spMatrizProdutos[i, 1]);
-                                                Console.WriteLine("Preço: R${0}", spMatrizProdutos[i, 2]);
-                                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizProdutos[i, 3]);
-                                                Console.WriteLine("Descrição: {0}", spMatrizProdutos[i, 4]);
+                                                Console.WriteLine("Código de cadastro: {0}", spMatrizDeProdutos[i, 0]);
+                                                Console.WriteLine("Nome: {0}", spMatrizDeProdutos[i, 1]);
+                                                Console.WriteLine("Preço: R${0}", spMatrizDeProdutos[i, 2]);
+                                                Console.WriteLine("Quantidade em estoque: {0}", spMatrizDeProdutos[i, 3]);
+                                                Console.WriteLine("Descrição: {0}", spMatrizDeProdutos[i, 4]);
                                             }
                                         }
                                         Console.WriteLine();
@@ -570,7 +691,7 @@ namespace CineTech
                                     }
                                 case ConsoleKey.F4:
                                     {
-                                        GestaoProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+                                        GestaoProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
                                         break;
                                     }
                             }
@@ -581,7 +702,7 @@ namespace CineTech
                     }
                 case ConsoleKey.F5:
                     {
-                        MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizProdutos, ref plinhaMatrizProdutos);
+                        MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
                         break;
                     }
             }
@@ -617,7 +738,7 @@ namespace CineTech
             Console.Clear();
         }
 
-        public void MenuLogin(string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, string[] sArrayDeUsuariosBloquiados, int pTentativasDeLogin, ref int posicaoBloquiados, string[,] spMatrizProdutos, ref int plinhaMatrizProdutos)
+        public void MenuLogin(string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, string[] sArrayDeUsuariosBloquiados, int pTentativasDeLogin, ref int posicaoBloquiados, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes)
         {
 
             string usuario, senha;
@@ -638,11 +759,11 @@ namespace CineTech
             {
 
                 Console.WriteLine("{0} Usuario esta bloqueado contate o administrador", usuario);
-                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizProdutos, ref plinhaMatrizProdutos);
+                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
             }
             if (valorAutentificao == 1 || (valorAutentificao == 2))
             {
-                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizProdutos, ref plinhaMatrizProdutos);
+                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
             }
 
             else if (valorAutentificao == 3)
@@ -652,7 +773,7 @@ namespace CineTech
                 Console.WriteLine("Senha incorreta. Tente novamente");
                 Console.WriteLine("Tentativas {0} de 3", pTentativasDeLogin);
 
-                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizProdutos, ref plinhaMatrizProdutos);
+                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
                 Console.ReadKey();
 
             }
@@ -663,7 +784,7 @@ namespace CineTech
                 Console.WriteLine("Usuario Bloqueado");
                 Console.ReadKey();
                 posicaoBloquiados++;
-                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizProdutos, ref plinhaMatrizProdutos);
+                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes);
             }
             else
             {
@@ -720,16 +841,17 @@ namespace CineTech
             string[] sArrayDeLoginDeUsuarios = { "Danilo", "Leonardo", "Joao" };
             string[] sArrayDeSenhaDeUsuarios = { "1234", "1111", "1234" };
             string[] sArrayDeUsuariosBloqueados = new string[100];
-            string[,] sMatrizProdutos = new string[100, 5];
+            string[,]sMatrizDeProdutos = { { "01", "Ingresso", "30", "50", "Bom" }, { "02", "Bala", "30", "50", "Bom" }, { "03", "Pipoca", "30", "50", "Bom" }, { "04", "Refrigerante", "30", "50", "Bom" }, { "05", "Chocolate", "30", "50", "Bom" } };
+            string[,]sMatrizDeClientes = { { "086.248.766-80", "Joao", "546483330", "Belo Horizonte" }, { "088.258.766-80", "Marcia", "5999483330", "Belo Horizonte" }, { "086.248.644-80", "Pedro", "599980", "Belo Horizonte" } };
             int tentativasDeLogin = 3, posicaoBloqueados = 0, linhaMatrizProdutos = -1;
 
             Login MetodosDeInicializacao = new Login();
             MetodosDeInicializacao.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
-            MetodosDeInicializacao.MenuLogin(sArrayDeLoginDeUsuarios, sArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloqueados, tentativasDeLogin, ref posicaoBloqueados, sMatrizProdutos, ref linhaMatrizProdutos);
+            MetodosDeInicializacao.MenuLogin(sArrayDeLoginDeUsuarios, sArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloqueados, tentativasDeLogin, ref posicaoBloqueados, sMatrizDeProdutos, ref linhaMatrizProdutos,sMatrizDeClientes);
 
 
         }
     }
-
 }
+
