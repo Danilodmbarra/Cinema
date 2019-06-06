@@ -12,6 +12,7 @@ namespace CineTech
     {
         static void Main(string[] args)
         {
+            ConsolePersonalizado Templates = new ConsolePersonalizado();
 
             string[] sArrayDeLoginDeUsuarios = { "Danilo", "Leonardo", "Joao" };
             string[] sArrayDeSenhaDeUsuarios = { "1234", "1111", "1234" };
@@ -21,7 +22,7 @@ namespace CineTech
             int tentativasDeLogin = 3, posicaoBloqueados = 0, linhaMatrizProdutos = -1;
 
             Login MetodosDeInicializacao = new Login();
-            MetodosDeInicializacao.TelaDeAbertura();
+            Templates.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
             MetodosDeInicializacao.MenuLogin(sArrayDeLoginDeUsuarios, sArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloqueados, tentativasDeLogin, ref posicaoBloqueados, sMatrizDeProdutos, ref linhaMatrizProdutos,sMatrizDeClientes);
 

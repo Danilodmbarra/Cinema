@@ -23,23 +23,23 @@ namespace CineTech
         public void MenuAdministracao(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes)
         {
             Login MetodosDeInicializacao = new Login();
-            ConsolePersonalizado MenuConsole = new ConsolePersonalizado();
+            ConsolePersonalizado Templates = new ConsolePersonalizado();
             bool condicao = true;
             ConsoleKeyInfo lertecla;
             do
             {
-                lertecla = MenuConsole.MenuAreaDoAdministrador();
+                lertecla = Templates.MenuAreaDoAdministrador();
 
                 switch (lertecla.Key)
                 {
                     case ConsoleKey.F1:
                         {
-                            MenuConsole.MenuAreaDeGestaoDeFuncionarios();
+                            Templates.MenuAreaDeGestaoDeFuncionarios();
                             break;
                         }
                     case ConsoleKey.F4:
                         {
-                            MetodosDeInicializacao.TelaDeAbertura();
+                            Templates.TelaDeAbertura();
                             MetodosDeInicializacao.TelaDeCarregamento();
                             MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes);
                             condicao = false;
@@ -48,13 +48,13 @@ namespace CineTech
                         }
                     default:
                         {
-                            MenuConsole.MenuAreaDoAdministradorTeclaInvalida();
+                            Templates.MenuAreaDoAdministradorTeclaInvalida();
                             break;
                         }
                 }
             } while (condicao);
 
-            MetodosDeInicializacao.TelaDeAbertura();
+            Templates.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
             MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes);
         }
@@ -62,53 +62,29 @@ namespace CineTech
         {
             Login MetodosDeInicializacao = new Login();
             ConsoleKeyInfo lertecla;
+            ConsolePersonalizado Templates = new ConsolePersonalizado();
             bool condicao = true;
             do
             {
-                Console.Clear();
-                Console.WriteLine("==========================================================================");
-                Console.WriteLine("                           ÁREA DO FUNCIONÁRIO                            ");
-                Console.WriteLine("==========================================================================");
-                Console.WriteLine("Bem vindo, {0}! Pressione a tecla referente à opção desejada: ", pUsuario);
-                Console.WriteLine();
-                Console.WriteLine("F1) Gestão de Clientes");
-                Console.WriteLine();
-                Console.WriteLine("F2) Gestão Financeira");
-                Console.WriteLine();
-                Console.WriteLine("F3) Gestão de Produtos");
-                Console.WriteLine();
-                Console.WriteLine("F4) Operacao de vendas");
-                Console.WriteLine();
-                Console.WriteLine("F5) Retornar à tela de Login");
-                lertecla = Console.ReadKey();
-
+                lertecla = Templates.MenuAreaDoFuncionario(pUsuario);
+                
                 switch (lertecla.Key)
                 {
                     case ConsoleKey.F1:
                         {
-                            Console.Clear();
-                            Console.WriteLine("==========================================================================");
-                            Console.WriteLine("                 ÁREA DO FUNCIONÁRIO - GESTÃO DE CLIENTES                 ");
-                            Console.WriteLine("==========================================================================");
-                            Console.WriteLine("Método em desenvolvimento! Pressione qualquer tecla para retornar ao menu.");
-                            Console.ReadKey();
+                            Templates.MenuAreaDeGestaoDeClientes();
                             break;
                         }
                     case ConsoleKey.F2:
                         {
-                            Console.Clear();
-                            Console.WriteLine("==========================================================================");
-                            Console.WriteLine("                 ÁREA DO FUNCIONÁRIO - GESTÃO FINANCEIRA                  ");
-                            Console.WriteLine("==========================================================================");
-                            Console.WriteLine("Método em desenvolvimento! Pressione qualquer tecla para retornar ao menu.");
-                            Console.ReadKey();
+                            Templates.MenuAreaDeGestaoFinanceira();
                             break;
                         }
                     case ConsoleKey.F3:
                         {
                             do
                             {
-                                GestaoProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes);
+                              GestaoProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes);
                             } while (lertecla.Key != ConsoleKey.F5);
                             break;
                         }
@@ -125,18 +101,13 @@ namespace CineTech
                         }
                     default:
                         {
-                            Console.Clear();
-                            Console.WriteLine("==========================================================================");
-                            Console.WriteLine("                           ÁREA DO FUNCIONÁRIO                            ");
-                            Console.WriteLine("==========================================================================");
-                            Console.WriteLine("Opção Inválida. Pressione qualquer tecla para retornar ao menu.");
-                            Console.ReadKey();
+                            Templates.MenuAreaDoFuncionarioTeclaInvalida();
                             break;
                         }
                 }
             } while (condicao);
 
-            MetodosDeInicializacao.TelaDeAbertura();
+            Templates.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
             MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes);
         }

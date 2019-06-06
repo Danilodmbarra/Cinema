@@ -8,19 +8,7 @@ namespace CineTech
 {
     class Login
     {
-
-        public void TelaDeAbertura()
-        {
-            Console.WriteLine("  ______  __  .__   __.  _______ .___________. _______   ______  __    __  ");
-            Console.WriteLine(" /      ||  | |  \" |  | |   ____||           ||   ____| /      ||  |  |  | ");
-            Console.WriteLine("|  ,----'|  | |   \"|  | |  |__   `---|  |----`|  |__   |  ,----'|  |__|  | ");
-            Console.WriteLine("|  |     |  | |  . `  | |   __|      |  |     |   __|  |  |     |   __   | ");
-            Console.WriteLine("|  `----.|  | |  |\"   | |  |____     |  |     |  |____ |  `----.|  |  |  | ");
-            Console.WriteLine(" \"______||__| |__| \"__| |_______|    |__|     |_______| \"______||__|  |__| ");
-            Console.WriteLine();
-            Console.WriteLine();
-
-        }
+            
 
         public void TelaDeCarregamento()
         {
