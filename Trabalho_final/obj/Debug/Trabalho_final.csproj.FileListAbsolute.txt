@@ -5,3 +5,9 @@ C:\Users\Oscar Alho\source\repos\Trabalho_final\Trabalho_final\obj\Debug\Trabalh
 C:\Users\Oscar Alho\source\repos\Trabalho_final\Trabalho_final\obj\Debug\Trabalho_final.csproj.CoreCompileInputs.cache
 C:\Users\Oscar Alho\source\repos\Trabalho_final\Trabalho_final\obj\Debug\Trabalho_final.exe
 C:\Users\Oscar Alho\source\repos\Trabalho_final\Trabalho_final\obj\Debug\Trabalho_final.pdb
+C:\Users\usuario\Downloads\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.exe.config
+C:\Users\usuario\Downloads\Cinema-master\Trabalho_final\obj\Debug\Trabalho_final.exe
+C:\Users\usuario\Downloads\Cinema-master\Trabalho_final\obj\Debug\Trabalho_final.pdb
+C:\Users\usuario\Downloads\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.exe
+C:\Users\usuario\Downloads\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.pdb
+C:\Users\usuario\Downloads\Cinema-master\Trabalho_final\obj\Debug\Trabalho_final.csprojResolveAssemblyReference.cache

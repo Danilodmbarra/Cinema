@@ -36,10 +36,19 @@ namespace CineTech
             Console.WriteLine("==========================================================================");
             Console.WriteLine("              ÁREA DO ADMINISTRADOR - GESTÃO DE FUNCIONÁRIOS              ");
             Console.WriteLine("==========================================================================");
-            Console.WriteLine("Método em desenvolvimento! Pressione qualquer tecla para retornar ao menu.");
+            Console.WriteLine("Escolha a opção desejada: ");
+            Console.WriteLine();
+            Console.WriteLine("F1) Cadastrar novo funcionário.");
+            Console.WriteLine();
+            Console.WriteLine("F2) Editar cadastro de funcionário.");
+            Console.WriteLine();
+            Console.WriteLine("F3) Excluir cadastro de funcionário.");
+            Console.WriteLine();
+            Console.WriteLine("F4) Consultar funcionários cadastrados.");
+            Console.WriteLine();
+            Console.WriteLine("F5) Retornar à tela de login.");
+
             return Console.ReadKey();
-
-
         }
         public ConsoleKeyInfo MenuAreaDoAdministrador()
         {
@@ -72,7 +81,8 @@ namespace CineTech
             Console.WriteLine();
             Console.WriteLine("F4) Operacao de vendas");
             Console.WriteLine();
-            Console.WriteLine("F5) Retornar à tela de Login");
+            Console.WriteLine("F5) Retornar à tela de login");
+
             return Console.ReadKey();
         }
         public ConsoleKeyInfo MenuAreaDeGestaoDeClientes()

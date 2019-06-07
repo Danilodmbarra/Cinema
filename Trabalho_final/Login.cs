@@ -22,7 +22,7 @@ namespace CineTech
             Console.Clear();
         }
 
-        public void MenuLogin(string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, string[] sArrayDeUsuariosBloquiados, int pTentativasDeLogin, ref int posicaoBloquiados, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, string[,] spMatrizDeVendas)
+        public void MenuLogin(string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, string[] sArrayDeUsuariosBloquiados, int pTentativasDeLogin, ref int posicaoBloquiados, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
         {
 
             string usuario, senha;
@@ -43,11 +43,11 @@ namespace CineTech
             {
 
                 Console.WriteLine("{0} Usuario esta bloqueado contate o administrador", usuario);
-                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes,spMatrizDeVendas);
+                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
             }
             if (valorAutentificao == 1 || (valorAutentificao == 2))
             {
-                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes,spMatrizDeVendas);
+                MetodosDoMenu.AberturaDeMenus(valorAutentificao, usuario, senha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, sArrayDeUsuariosBloquiados, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
             }
 
             else if (valorAutentificao == 3)
@@ -57,7 +57,7 @@ namespace CineTech
                 Console.WriteLine("Senha incorreta. Tente novamente");
                 Console.WriteLine("Tentativas {0} de 3", pTentativasDeLogin);
 
-                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes,spMatrizDeVendas);
+                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
                 Console.ReadKey();
 
             }
@@ -68,7 +68,7 @@ namespace CineTech
                 Console.WriteLine("Usuario Bloqueado");
                 Console.ReadKey();
                 posicaoBloquiados++;
-                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, spMatrizDeVendas);
+                MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicaoBloquiados, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
             }
             else
             {

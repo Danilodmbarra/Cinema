@@ -8,7 +8,7 @@ namespace CineTech
 {
     class Vendas
     {
-        public void VenderProdutos(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes,string[,]spMatrizDeVendas)
+        public void VenderProdutos(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes)
         {
 
             string cpf;
@@ -16,24 +16,21 @@ namespace CineTech
             Console.WriteLine("Digite o cpf. XXXXXXXXXxXX");
             cpf = Console.ReadLine();
 
-            ConfirmarSeOClienteECadastrado(spMatrizDeClientes, cpf, spMatrizDeProdutos, spMatrizDeClientes,spMatrizDeVendas);
+            ConfirmarSeOClienteECadastrado(spMatrizDeClientes, cpf, spMatrizDeProdutos, spMatrizDeClientes);
             ListarProdutos(spMatrizDeProdutos);
-            OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes,spMatrizDeVendas);
+            OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes);
 
             Console.ReadKey();
 
         }
-        public void OperacaoDeVenda(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes,string[,] spMatrizDeVendas)
+        public void OperacaoDeVenda(string[,] spMatrizDeProdutos, string[,] spMatrizClientes)
         {
             ConsoleKeyInfo OpcaoParaCadastrar;
-            DateTime HorarioDaCompra = DateTime.Now;
-            //matrizDeVendas = produto,quantidade,preco,horario;
-
             string codigo;
             string[,] resumoDaCompra = new string[100, 3];
             string[] sArrayDeProdutos = new string[spMatrizDeProdutos.GetLength(0)];
             int estoqueDoProduto, precoTotal = 0;
-            int troco, dinheiroDocliente, posicao,quantidade=0;
+            int troco, dinheiroDocliente, posicao;
 
 
             ConsoleKeyInfo TeclaDeSair;
@@ -47,82 +44,41 @@ namespace CineTech
                 for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
                 {
                     sArrayDeProdutos[i] = spMatrizDeProdutos[i, 0];
-                   
-                 }
-                if (sArrayDeProdutos.Contains(codigo))
-                {
-                    posicao = Array.IndexOf(sArrayDeProdutos, codigo);
-                    Console.WriteLine("Nome: {0}", spMatrizDeProdutos[posicao, 1]);
-
-                    Console.WriteLine("Digite a quantidade");
-                    quantidade = Convert.ToInt32(Console.ReadLine());
-
-
-
-                    precoTotal += Convert.ToInt32(spMatrizDeProdutos[posicao, 2]);
-                    estoqueDoProduto = Convert.ToInt32(spMatrizDeProdutos[posicao, 3]);
-                    estoqueDoProduto -= quantidade;
-
-
-                    if(estoqueDoProduto <0)
+                    if (sArrayDeProdutos.Contains(codigo))
                     {
-                        Console.WriteLine("Quantidade insuficiente no estoque");
+                        posicao = Array.IndexOf(sArrayDeProdutos, codigo);
+                        Console.WriteLine("Nome: {0}", spMatrizDeProdutos[posicao, 1]);
+
+                        precoTotal += Convert.ToInt32(spMatrizDeProdutos[posicao, 2]);
+                        estoqueDoProduto = Convert.ToInt32(spMatrizDeProdutos[posicao, 3]);
+                        estoqueDoProduto -= 1;
+                        spMatrizDeProdutos[i, 3] = Convert.ToString(estoqueDoProduto);
                     }
                     else
                     {
-                        spMatrizDeProdutos[posicao, 3] = Convert.ToString(estoqueDoProduto);
-                        for (int indiceLinhas = 0; indiceLinhas < spMatrizDeVendas.GetLength(0); indiceLinhas++)
+                        Console.WriteLine("Produto Nao encontrado");
+                        Console.WriteLine("Deseja Cadastra-lo?\n [s]Sim \n [n]Nao");
+                        OpcaoParaCadastrar = Console.ReadKey();
+
+                        if (OpcaoParaCadastrar.Equals(ConsoleKey.S))
                         {
-                            for (int indiceColunas = 0; indiceColunas < spMatrizDeVendas.GetLength(1); indiceColunas++)
-                            {
-                                switch (indiceColunas)
-                                {
-                                    case 0:
-                                        spMatrizDeVendas[indiceLinhas, indiceColunas] = sArrayDeProdutos[posicao];
-                                        break;
-                                    case 1:
-                                        spMatrizDeVendas[indiceLinhas, indiceColunas] = spMatrizDeProdutos[posicao, 2];
-
-                                        break;
-                                    case 2:
-                                }
-                            }
+                            //Chamar Metodo Para Cadastrar Produto
                         }
-                        
+                        else if (OpcaoParaCadastrar.Equals(ConsoleKey.N))
+                        {
+                            OperacaoDeVenda(spMatrizDeProdutos, spMatrizClientes);
+                        }
 
                     }
 
-                    
                 }
-                else
-                {
-                    Console.WriteLine("Produto Nao encontrado");
-                    Console.WriteLine("Deseja Cadastra-lo?\n [s]Sim \n [n]Nao");
-                    OpcaoParaCadastrar = Console.ReadKey();
-
-                    if (OpcaoParaCadastrar.Equals(ConsoleKey.S))
-                    {
-                        //Chamar Metodo Para Cadastrar Produto
-                    }
-                    else if (OpcaoParaCadastrar.Equals(ConsoleKey.N))
-                    {
-                        OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes,spMatrizDeVendas);
-                    }
-                }
-
                 Console.WriteLine("Para adicionar mais um produto aperte enter");
                 Console.WriteLine("Para finalizar a compra aperte f5");
                 TeclaDeSair = Console.ReadKey();
-                if(TeclaDeSair.Key == ConsoleKey.F5)
-                {
-                    Console.WriteLine("Deseja Finalizar");
-                    Console.WriteLine("[S]SIM\n [N]Nao");
-                    TeclaDeSair = Console.ReadKey();
-                    
-                }         
-                               
-            } while (TeclaDeSair.Key != ConsoleKey.S);
 
+
+
+            } while (TeclaDeSair.Key != ConsoleKey.F5);
             Console.WriteLine("Operacao Finalizada");
             ResumoDaCompra(resumoDaCompra);
             Console.WriteLine("Digite o ");
@@ -145,7 +101,7 @@ namespace CineTech
                 Console.WriteLine();
             }
         }
-        public void ConfirmarSeOClienteECadastrado(string[,] pMatrizClientes, string pCpf, string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes,string[,]spMatrizDeVendas)
+        public void ConfirmarSeOClienteECadastrado(string[,] pMatrizClientes, string pCpf, string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes)
         {
             ConsoleKeyInfo OpcaoParaCadastrar;
             int posicao;
@@ -177,7 +133,7 @@ namespace CineTech
                 }
                 else if (OpcaoParaCadastrar.Equals(ConsoleKey.N))
                 {
-                    VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes,spMatrizDeVendas);
+                    VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes);
                 }
                 //AINDA FALTA COLOCAR TELA DOS PRODUTOS,CALCULAR O PRECO DA COMPRA.
                 Console.ReadKey();
