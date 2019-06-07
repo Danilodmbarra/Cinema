@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsolePersonalizado.cs" />
-    <Compile Include="GestaFinanceira.cs" />
+    <Compile Include="GestaoCliente.cs" />
+    <Compile Include="GestaoFinanceira.cs" />
+    <Compile Include="GestaoFuncionarios.cs" />
     <Compile Include="GestaoProdutos.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Main.cs" />
