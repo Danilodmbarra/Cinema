@@ -20,12 +20,12 @@ namespace CineTech
             string[,] sMatrizDeProdutos = new string[100, 5];
             string[,] sMatrizDeFuncionarios = new string[100, 4];
             string[,]sMatrizDeClientes = { { "086.248.766-80", "Joao", "546483330", "Belo Horizonte" }, { "088.258.766-80", "Marcia", "5999483330", "Belo Horizonte" }, { "086.248.644-80", "Pedro", "599980", "Belo Horizonte" } };
-            int tentativasDeLogin = 3, posicaoBloqueados = 0, linhaMatrizProdutos = -1, linhaMatrizFuncionarios = -1;
+            int tentativasDeLogin = 3, posicaoBloqueados = 0, linhaMatrizProdutos = -1, linhaMatrizFuncionarios = -1,linhaMatrizResumoVendas= -1;
 
             Login MetodosDeInicializacao = new Login();
             Templates.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
-            MetodosDeInicializacao.MenuLogin(sArrayDeLoginDeUsuarios, sArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloqueados, tentativasDeLogin, ref posicaoBloqueados, sMatrizDeProdutos, ref linhaMatrizProdutos, sMatrizDeClientes, ref linhaMatrizFuncionarios, sMatrizDeFuncionarios);
+            MetodosDeInicializacao.MenuLogin(sArrayDeLoginDeUsuarios, sArrayDeSenhaDeUsuarios, sArrayDeUsuariosBloqueados, tentativasDeLogin, ref posicaoBloqueados, sMatrizDeProdutos, ref linhaMatrizProdutos, sMatrizDeClientes, ref linhaMatrizFuncionarios, sMatrizDeFuncionarios,ref linhaMatrizResumoVendas);
 
 
         }
