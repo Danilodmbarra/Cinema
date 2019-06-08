@@ -68,6 +68,7 @@ namespace CineTech
             Login MetodosDeInicializacao = new Login();
             ConsoleKeyInfo lertecla;
             ConsolePersonalizado Templates = new ConsolePersonalizado();
+            GestaoFuncionarios cadastrar = new GestaoFuncionarios();
             bool condicao = true;
             do
             {
@@ -77,7 +78,12 @@ namespace CineTech
                 {
                     case ConsoleKey.F1:
                         {
-                            Templates.MenuAreaDeGestaoDeClientes();
+                            GestaoCliente metodoParaGestaoDeClientes = new GestaoCliente();
+                            do
+                            {
+                                metodoParaGestaoDeClientes.GestaoDeCliente(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+
+                            } while (lertecla.Key != ConsoleKey.F5);
                             break;
                         }
                     case ConsoleKey.F2:
@@ -97,7 +103,7 @@ namespace CineTech
                     case ConsoleKey.F4:
                         {
                             Vendas metodosParaOperacaoDeVendas = new Vendas();
-                            metodosParaOperacaoDeVendas.VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes,ref plinhaMatrizProdutos);
+                            metodosParaOperacaoDeVendas.VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes);
                             break;
                         }
                     case ConsoleKey.F5:
