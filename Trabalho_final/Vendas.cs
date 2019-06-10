@@ -8,32 +8,33 @@ namespace CineTech
 {
     class Vendas
     {
-        public void VenderProdutos(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes, ref int pLinhaMatrizProdutos)
+        public void VenderProdutos(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes, ref int pLinhaMatrizProdutos,string [,]spMatrizDeComprasFeita)
         {
 
             string cpf;
             Console.Clear();
             Console.WriteLine("Digite o cpf. XXXXXXXXXXXX");
             cpf = Console.ReadLine();
-            int linhaMatrizDeResumo = 0;
-            ConfirmarSeOClienteECadastrado(spMatrizDeClientes,cpf, spMatrizDeProdutos, spMatrizDeClientes, ref pLinhaMatrizProdutos);
-            OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes, ref pLinhaMatrizProdutos, linhaMatrizDeResumo);
+            int linhaMatrizDeResumo = -1;
+            ConfirmarSeOClienteECadastrado(spMatrizDeClientes,cpf, spMatrizDeProdutos, spMatrizDeClientes, ref pLinhaMatrizProdutos, spMatrizDeComprasFeita);
+            OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes, ref pLinhaMatrizProdutos, linhaMatrizDeResumo, spMatrizDeComprasFeita);
 
             Console.ReadKey();
 
         }
-        public void OperacaoDeVenda(string[,] spMatrizDeProdutos, string[,] spMatrizClientes, ref int pLinhaMatrizProdutos, int pLinhaMatrizDeResumo)
+        public void OperacaoDeVenda(string[,] spMatrizDeProdutos, string[,] spMatrizClientes, ref int pLinhaMatrizProdutos, int pLinhaMatrizDeResumo,string [,] spMatrizDeComprasFeita)
         {
             GestaoProdutos MetodosParaCadastrar = new GestaoProdutos();
             ConsoleKeyInfo OpcaoParaCadastrar;
+
             string codigo;
             string[,] resumoParcialDaCompra = new string[100, 4];
             string[] sArrayDeProdutos = new string[spMatrizDeProdutos.GetLength(0)];
-            int estoqueDoProduto, precoTotal;
-            int troco, dinheiroDocliente, posicao;
-            int precoParcial, quantidadeDoProduto;
+            int estoqueDoProduto;
+            double precoTotal=0, precoParcial=0;
+            int quantidadeDoProduto,posicao;
             ConsoleKeyInfo TeclaDeSair, TeclaDeConfirmacao;
-            Console.Clear();
+            
             //resumoParcialDaCompra = {Nome do produto,Quantidade,PrecoSomado,horarioDaCompra}
             do
             {
@@ -49,17 +50,28 @@ namespace CineTech
 
                 if (sArrayDeProdutos.Contains(codigo))
                 {
-
-
                     posicao = Array.IndexOf(sArrayDeProdutos, codigo);
+                    precoTotal = Convert.ToDouble(spMatrizDeProdutos[posicao,2]);
                     Console.WriteLine("Nome: {0}", spMatrizDeProdutos[posicao, 1]);
                     Console.WriteLine("Digite a quantidade do produto");
                     quantidadeDoProduto = Convert.ToInt32(Console.ReadLine());
-                    precoTotal = Convert.ToInt32(spMatrizDeProdutos[posicao, 1]);
-                    precoParcial = quantidadeDoProduto*precoTotal;
                     estoqueDoProduto = Convert.ToInt32(spMatrizDeProdutos[posicao, 3]);
-                    estoqueDoProduto -= quantidadeDoProduto;
+                    
+                    if(quantidadeDoProduto<= estoqueDoProduto)
+                    {
+                        estoqueDoProduto -= quantidadeDoProduto;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Erro!\nQuantidade De Produto Indisponivel");
+                        
+                        OperacaoDeVenda(spMatrizDeProdutos, spMatrizClientes, ref pLinhaMatrizProdutos, pLinhaMatrizDeResumo, spMatrizDeComprasFeita);
+                        
+                    }
+
                     spMatrizDeProdutos[posicao, 3] = Convert.ToString(estoqueDoProduto);
+                    precoParcial = quantidadeDoProduto * precoTotal;
 
                     Console.WriteLine("Confirmar  [ENTER]");
                     Console.WriteLine("Cancelar [ESC]");
@@ -67,11 +79,13 @@ namespace CineTech
 
                     if (TeclaDeConfirmacao.Key.Equals(ConsoleKey.Enter))
                     {
-                        resumoParcialDaCompra= ResumoDaCompra(resumoParcialDaCompra, spMatrizDeProdutos, posicao, pLinhaMatrizDeResumo, precoParcial, quantidadeDoProduto);
+                        precoTotal += precoParcial; 
+                        pLinhaMatrizDeResumo += 1;
+                        ResumoDaCompra(resumoParcialDaCompra, spMatrizDeProdutos, posicao,ref pLinhaMatrizDeResumo, precoParcial, quantidadeDoProduto);
                     }
                     else
                     {
-                        OperacaoDeVenda(spMatrizDeProdutos, spMatrizClientes, ref pLinhaMatrizProdutos, pLinhaMatrizDeResumo);
+                        OperacaoDeVenda(spMatrizDeProdutos, spMatrizClientes, ref pLinhaMatrizProdutos, pLinhaMatrizDeResumo, spMatrizDeComprasFeita);
                     }
 
 
@@ -84,11 +98,11 @@ namespace CineTech
 
                     if (OpcaoParaCadastrar.Key.Equals(ConsoleKey.S))
                     {
-                        MetodosParaCadastrar.CadastrarProduto(ref pLinhaMatrizProdutos, spMatrizDeProdutos);
+                        MetodosParaCadastrar.CadastrarProduto(ref pLinhaMatrizDeResumo, spMatrizDeProdutos,spMatrizDeComprasFeita);
                     }
                     else if (OpcaoParaCadastrar.Key.Equals(ConsoleKey.N))
                     {
-                        OperacaoDeVenda(spMatrizDeProdutos, spMatrizClientes, ref pLinhaMatrizProdutos, pLinhaMatrizDeResumo);
+                        OperacaoDeVenda(spMatrizDeProdutos, spMatrizClientes, ref pLinhaMatrizDeResumo, pLinhaMatrizDeResumo,spMatrizDeComprasFeita);
                     }
 
                 }
@@ -98,80 +112,93 @@ namespace CineTech
 
             } while (TeclaDeSair.Key != ConsoleKey.F5);
             Console.WriteLine("Operacao Finalizada");
-            ExibirResumoDaCompra(resumoParcialDaCompra);
+            ExibirResumoDaCompra(resumoParcialDaCompra,precoTotal,precoParcial);
             
 
         } 
-        public string[,] ResumoDaCompra(string[,] spResumoParcialDacompra, string[,] spMatrizDeProdutos, int posicao, int pLinhaMatrizDeResumo, int pPrecoParcial, int pQuantidadeDoProduto)
+        public string[,] ResumoDaCompra(string[,] resumoParcialDacompra, string[,] spMatrizDeProdutos, int posicao, ref int pLinhaMatrizDeResumo, double pPrecoParcial, int pQuantidadeDoProduto)
         {
-            DateTime horarioDaCompra = DateTime.Now;
-            for (int indiceColunas = 0; indiceColunas < spResumoParcialDacompra.GetLength(1); indiceColunas++)
+            string horarioDacompra;
+            horarioDacompra = Convert.ToString(DateTime.Now);
+           
+            
+            for (int indiceLinhas = pLinhaMatrizDeResumo; indiceLinhas < resumoParcialDacompra.GetLength(1); indiceLinhas++)
             {
-                switch (indiceColunas)
-                {
-                    case 1:
-                        {
-                            spResumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = spMatrizDeProdutos[posicao, 1];
-                            break;
-                        }
-                    case 2:
-                        {
-                            spResumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = Convert.ToString(pQuantidadeDoProduto);
-                            break;
-                        }
-                    case 3:
-                        {
-                            spResumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = Convert.ToString(pPrecoParcial);
-
-                            break;
-                        }
-                    case 4:
-                        {
-                            spResumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = Convert.ToString(horarioDaCompra);
-                            break;
-
-                        }
-                }
-            }
-            return spResumoParcialDacompra;
-
-        }
-        public void ExibirResumoDaCompra(string [,]spResumoParcialDacompra)
-        {
-            for (int indiceLinhas = 0; indiceLinhas < spResumoParcialDacompra.GetLength(0); indiceLinhas++)
-            {
-                for (int indiceColunas = 0; indiceColunas < spResumoParcialDacompra.GetLength(1); indiceColunas++)
+                for (int indiceColunas = 0; indiceColunas < resumoParcialDacompra.GetLength(1); indiceColunas++)
                 {
                     switch (indiceColunas)
                     {
+                        case 0:
+                            {
+                                resumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = spMatrizDeProdutos[posicao, 1];
+                                break;
+                            }
                         case 1:
                             {
-                                Console.WriteLine("Nome : {0}", spResumoParcialDacompra[indiceLinhas, indiceColunas]);
+                                resumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = Convert.ToString(pQuantidadeDoProduto);
                                 break;
                             }
                         case 2:
                             {
-                                Console.WriteLine("Preco Total : R${0}", spResumoParcialDacompra[indiceLinhas, indiceColunas]);
+                                resumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = Convert.ToString(pQuantidadeDoProduto);
+
                                 break;
                             }
                         case 3:
                             {
-                                Console.WriteLine("Quantidade : R${0}",spResumoParcialDacompra[indiceLinhas, indiceColunas]);
-
-                                break;
-                            }
-                        case 4:
-                            {
-                                Console.WriteLine("Horario : R${0}", spResumoParcialDacompra[indiceLinhas, indiceColunas]);
+                                resumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = horarioDacompra;
                                 break;
 
                             }
                     }
                 }
-                Console.WriteLine("\n");
             }
+            
+            return resumoParcialDacompra;
+
         }
-        
+        public void ExibirResumoDaCompra(string[,] spResumoParcialDacompra,double pPrecoTotal,double pPrecoParcial)
+        {
+           
+                for (int indiceLinhas = 0; indiceLinhas < spResumoParcialDacompra.GetLength(0); indiceLinhas++)
+            {
+                for (int indiceColunas = 0; indiceColunas < spResumoParcialDacompra.GetLength(1); indiceColunas++)
+                {
+                     if (spResumoParcialDacompra[indiceLinhas, indiceColunas] != null) { 
+                        {
+                            switch (indiceColunas)
+                            {
+                                case 0:
+                                    {
+                                        Console.WriteLine("Nome : {0}", spResumoParcialDacompra[indiceLinhas, indiceColunas]);
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        Console.WriteLine("Quantidade : {0}", spResumoParcialDacompra[indiceLinhas, indiceColunas]);
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        Console.WriteLine("Preco Parcial : R${0}", Convert.ToString(pPrecoParcial));
+
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        Console.WriteLine("Horario : {0}", spResumoParcialDacompra[indiceLinhas, indiceColunas]);
+                                        break;
+
+                                    }
+                            }
+                        }
+                    }
+                }
+                
+               
+            }
+            Console.WriteLine("Preco Total Da Compra {0}", pPrecoTotal);
+        }
         public void ListarProdutos(string[,] spMatrizDeProdutos)
         {
             for (int i = 0; i < spMatrizDeProdutos.GetLength(0); i++)
@@ -185,7 +212,7 @@ namespace CineTech
                 Console.WriteLine();
             }
         }
-        public void ConfirmarSeOClienteECadastrado(string[,] pMatrizDeClientes, string pCpf, string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes,ref int pLinhasMatrizProdutos)
+        public void ConfirmarSeOClienteECadastrado(string[,] pMatrizDeClientes, string pCpf, string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes,ref int pLinhasMatrizProdutos,string[,] spMatrizDeComprasFeita)
         {
             ConsoleKeyInfo OpcaoParaCadastrar;
             int posicao;
@@ -217,7 +244,7 @@ namespace CineTech
                 }
                 else if (OpcaoParaCadastrar.Equals(ConsoleKey.N))
                 {
-                    VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes,ref pLinhasMatrizProdutos);
+                    VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes,ref pLinhasMatrizProdutos, spMatrizDeComprasFeita);
                 }
                 //AINDA FALTA COLOCAR TELA DOS PRODUTOS,CALCULAR O PRECO DA COMPRA.
                 Console.ReadKey();
