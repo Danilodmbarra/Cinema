@@ -9,18 +9,18 @@ namespace CineTech
 
     class Menu
     {
-        public void AberturaDeMenus(int pAutentificacao, string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
+        public void AberturaDeMenus(int pAutentificacao, string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, ref int pLinhaMatrizClientes, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
         {
             if (pAutentificacao == 1)
             {
-                MenuAdministracao(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+                MenuAdministracao(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, ref pLinhaMatrizClientes, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
             }
             else if (pAutentificacao == 2)
             {
-                MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+                MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, ref pLinhaMatrizClientes, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
             }
         }
-        public void MenuAdministracao(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
+        public void MenuAdministracao(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, ref int plinhaMatrizClientes, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
         {
             Login MetodosDeInicializacao = new Login();
             ConsolePersonalizado Templates = new ConsolePersonalizado();
@@ -37,7 +37,7 @@ namespace CineTech
                             GestaoFuncionarios metodoParaGestaoDeFuncionarios = new GestaoFuncionarios();
                             do
                             {
-                                metodoParaGestaoDeFuncionarios.GestaoDeFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+                                metodoParaGestaoDeFuncionarios.GestaoDeFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizClientes, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
 
                             } while (lertecla.Key != ConsoleKey.F5);
                             break;
@@ -46,7 +46,7 @@ namespace CineTech
                         {
                             Templates.TelaDeAbertura();
                             MetodosDeInicializacao.TelaDeCarregamento();
-                            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+                            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, ref plinhaMatrizClientes, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
                             condicao = false;
 
                             break;
@@ -61,14 +61,13 @@ namespace CineTech
 
             Templates.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
-            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, ref plinhaMatrizClientes, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
         }
-        public void MenuFuncionarios(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
+        public void MenuFuncionarios(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, ref int plinhaMatrizClientes, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
         {
             Login MetodosDeInicializacao = new Login();
             ConsoleKeyInfo lertecla;
             ConsolePersonalizado Templates = new ConsolePersonalizado();
-            GestaoFuncionarios cadastrar = new GestaoFuncionarios();
             bool condicao = true;
             do
             {
@@ -78,12 +77,16 @@ namespace CineTech
                 {
                     case ConsoleKey.F1:
                         {
-                            GestaoCliente metodoParaGestaoDeClientes = new GestaoCliente();
-                            do
+                           // Templates.MenuAreaDeGestaoDeClientes();
                             {
-                                metodoParaGestaoDeClientes.GestaoDeCliente(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+                                GestaoCliente metodoParaGestaoDeClientes = new GestaoCliente();
+                                do
+                                {
+                                    metodoParaGestaoDeClientes.GestaoDeCliente(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, ref plinhaMatrizClientes, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
 
-                            } while (lertecla.Key != ConsoleKey.F5);
+                                } while (lertecla.Key != ConsoleKey.F5);
+                               
+                            }
                             break;
                         }
                     case ConsoleKey.F2:
@@ -103,7 +106,7 @@ namespace CineTech
                     case ConsoleKey.F4:
                         {
                             Vendas metodosParaOperacaoDeVendas = new Vendas();
-                            metodosParaOperacaoDeVendas.VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes);
+                            metodosParaOperacaoDeVendas.VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes,ref plinhaMatrizProdutos);
                             break;
                         }
                     case ConsoleKey.F5:
@@ -121,7 +124,7 @@ namespace CineTech
 
             Templates.TelaDeAbertura();
             MetodosDeInicializacao.TelaDeCarregamento();
-            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+            MetodosDeInicializacao.MenuLogin(spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, spArrayDeUsuariosBloquiados, pTentativasDeLogin, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, ref plinhaMatrizClientes, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
         }
     }
 }

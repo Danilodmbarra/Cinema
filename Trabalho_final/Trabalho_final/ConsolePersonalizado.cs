@@ -85,23 +85,14 @@ namespace CineTech
 
             return Console.ReadKey();
         }
-        public ConsoleKeyInfo MenuAreaDeGestaoDeClientes(string pUsuario)
+        public ConsoleKeyInfo MenuAreaDeGestaoDeClientes()
         {
             Console.Clear();
             Console.WriteLine("==========================================================================");
             Console.WriteLine("                 ÁREA DO FUNCIONÁRIO - GESTÃO DE CLIENTES                 ");
             Console.WriteLine("==========================================================================");
-            Console.WriteLine("Pressione a tecla desejada: ", pUsuario);
-            Console.WriteLine();
-            Console.WriteLine("F1) Cadastrar Clientes");
-            Console.WriteLine();
-            Console.WriteLine("F2) Editar Cadastro");
-            Console.WriteLine();
-            Console.WriteLine("F3) Consultar Cadastro");
-            Console.WriteLine();
-            Console.WriteLine("F4) Excluir Cadastro");
-            Console.WriteLine();
-            Console.WriteLine("F5) Retornar ao menu principal");
+            Console.WriteLine("Método em desenvolvimento! Pressione qualquer tecla para retornar ao menu.");
+
             return Console.ReadKey();
         }
         public ConsoleKeyInfo MenuAreaDeGestaoFinanceira()
