@@ -8,7 +8,7 @@ namespace CineTech
 {
     class GestaoProdutos
     {                
-        public void GestaoDeProdutos(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string[,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
+        public void GestaoDeProdutos(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
         {
             ConsoleKeyInfo lertecla;            
 
@@ -34,7 +34,7 @@ namespace CineTech
             {
                 case ConsoleKey.F1:
                     {
-                        CadastrarProduto(ref plinhaMatrizProdutos, spMatrizDeProdutos,spMatrizDeComprasFeita);
+                        CadastrarProduto(ref plinhaMatrizProdutos, spMatrizDeProdutos);
                         break;
                     }
                 case ConsoleKey.F2:
@@ -44,24 +44,24 @@ namespace CineTech
                     }
                 case ConsoleKey.F3:
                     {
-                        ExcluirProduto(plinhaMatrizProdutos, spMatrizDeProdutos,spMatrizDeComprasFeita);
+                        ExcluirProduto(plinhaMatrizProdutos, spMatrizDeProdutos);
                         break;
                     }
                 case ConsoleKey.F4:
                     {
-                        ConsultarProduto(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                        ConsultarProduto(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
                         break;
 
                     }
                 case ConsoleKey.F5:
                     {
                         Menu metodoparaMenuFuncionarios = new Menu();
-                        metodoparaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                        metodoparaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
                         break;
                     }
             }
         }
-        public void CadastrarProduto(ref int plinhaMatrizProdutos, string[,] spMatrizDeProdutos,string [,]sMatrizDeComprasFeita)
+        public void CadastrarProduto(ref int plinhaMatrizProdutos, string[,] spMatrizDeProdutos)
         {
             plinhaMatrizProdutos += 1;
             string nome, descricao, quantidade, preço;
@@ -266,7 +266,7 @@ namespace CineTech
                 Console.ReadKey();
             }
         }
-        public void ExcluirProduto(int plinhaMatrizProdutos, string[,] spMatrizDeProdutos,string [,] sMatrizDeComprasFeita)
+        public void ExcluirProduto(int plinhaMatrizProdutos, string[,] spMatrizDeProdutos)
         {
             string excluir, confirmaexcluir;
             int excluircodigo = -1, contexcluir = 0;
@@ -328,7 +328,7 @@ namespace CineTech
                 Console.ReadKey();
             }
         }
-        public void ConsultarProduto(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string[,]spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
+        public void ConsultarProduto(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
         {
             ConsoleKeyInfo lertecla;
             do
@@ -456,7 +456,7 @@ namespace CineTech
                         }
                     case ConsoleKey.F4:
                         {
-                            GestaoDeProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                            GestaoDeProdutos(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
                             break;
                         }
                 }

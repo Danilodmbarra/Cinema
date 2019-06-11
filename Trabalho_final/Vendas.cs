@@ -10,7 +10,7 @@ namespace CineTech
     {
         public void VenderProdutos(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes, ref int pLinhaMatrizProdutos,string [,]spMatrizDeComprasFeita)
         {
-
+            
             string cpf;
             Console.Clear();
             Console.WriteLine("Digite o cpf. XXXXXXXXXXXX");
@@ -26,6 +26,7 @@ namespace CineTech
         {
             GestaoProdutos MetodosParaCadastrar = new GestaoProdutos();
             ConsoleKeyInfo OpcaoParaCadastrar;
+
 
             string codigo;
             string[,] resumoParcialDaCompra = new string[100, 4];
@@ -79,8 +80,7 @@ namespace CineTech
 
                     if (TeclaDeConfirmacao.Key.Equals(ConsoleKey.Enter))
                     {
-                        precoTotal += precoParcial; 
-                        pLinhaMatrizDeResumo += 1;
+                        pLinhaMatrizDeResumo++; 
                         ResumoDaCompra(resumoParcialDaCompra, spMatrizDeProdutos, posicao,ref pLinhaMatrizDeResumo, precoParcial, quantidadeDoProduto);
                     }
                     else
@@ -112,7 +112,7 @@ namespace CineTech
 
             } while (TeclaDeSair.Key != ConsoleKey.F5);
             Console.WriteLine("Operacao Finalizada");
-            ExibirResumoDaCompra(resumoParcialDaCompra,precoTotal,precoParcial);
+            ExibirResumoDaCompra(spMatrizDeProdutos, spMatrizClientes, ref pLinhaMatrizProdutos, ref pLinhaMatrizDeResumo, spMatrizDeComprasFeita,resumoParcialDaCompra, precoTotal,precoParcial);
             
 
         } 
@@ -157,10 +157,11 @@ namespace CineTech
             return resumoParcialDacompra;
 
         }
-        public void ExibirResumoDaCompra(string[,] spResumoParcialDacompra,double pPrecoTotal,double pPrecoParcial)
+        public void ExibirResumoDaCompra(string [,]spMatrizDeProdutos, string[,]spMatrizDeClientes, ref int pLinhaMatrizProdutos,ref int pLinhaMatrizDeResumo, string[,] spMatrizDeComprasFeita, string[,] spResumoParcialDacompra,double pPrecoTotal,double pPrecoParcial)
         {
-           
-                for (int indiceLinhas = 0; indiceLinhas < spResumoParcialDacompra.GetLength(0); indiceLinhas++)
+            Menu MetodosDeInicializacao = new Menu();
+
+            for (int indiceLinhas = 0; indiceLinhas < spResumoParcialDacompra.GetLength(0); indiceLinhas++)
             {
                 for (int indiceColunas = 0; indiceColunas < spResumoParcialDacompra.GetLength(1); indiceColunas++)
                 {
@@ -198,6 +199,8 @@ namespace CineTech
                
             }
             Console.WriteLine("Preco Total Da Compra {0}", pPrecoTotal);
+            
+
         }
         public void ListarProdutos(string[,] spMatrizDeProdutos)
         {
