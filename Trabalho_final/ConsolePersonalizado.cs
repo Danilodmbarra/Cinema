@@ -18,6 +18,16 @@ namespace CineTech
             Console.WriteLine(" \"______||__| |__| \"__| |_______|    |__|     |_______| \"______||__|  |__| ");
             Console.WriteLine();
             Console.WriteLine();
+            Console.WriteLine("Loading");
+
+        }
+        public void BemVindo()
+        {
+            
+            Console.WriteLine("==========================================================================");
+            Console.WriteLine("                      BEM VINDO AO SISTEMA CINETECH!                      ");
+            Console.WriteLine("==========================================================================");
+            
 
         }
 

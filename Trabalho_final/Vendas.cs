@@ -140,7 +140,7 @@ namespace CineTech
                             }
                         case 2:
                             {
-                                resumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = Convert.ToString(pQuantidadeDoProduto);
+                                resumoParcialDacompra[pLinhaMatrizDeResumo, indiceColunas] = Convert.ToString(pPrecoParcial);
 
                                 break;
                             }
@@ -160,6 +160,9 @@ namespace CineTech
         public void ExibirResumoDaCompra(string [,]spMatrizDeProdutos, string[,]spMatrizDeClientes, ref int pLinhaMatrizProdutos,ref int pLinhaMatrizDeResumo, string[,] spMatrizDeComprasFeita, string[,] spResumoParcialDacompra,double pPrecoTotal,double pPrecoParcial)
         {
             Menu MetodosDeInicializacao = new Menu();
+            int SomaTotalDeVendas;
+
+            OperacaoSomaTotal(spResumoParcialDacompra);
 
             for (int indiceLinhas = 0; indiceLinhas < spResumoParcialDacompra.GetLength(0); indiceLinhas++)
             {
@@ -198,9 +201,15 @@ namespace CineTech
                 
                
             }
-            Console.WriteLine("Preco Total Da Compra {0}", pPrecoTotal);
+
+            
             
 
+        }
+        public void OperacaoSomaTotal(string [,]spResumoParcialDacompra)
+        {
+       
+  
         }
         public void ListarProdutos(string[,] spMatrizDeProdutos)
         {

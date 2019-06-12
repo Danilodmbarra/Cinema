@@ -8,7 +8,7 @@ namespace CineTech
 {
     class GestaoFuncionarios
     {
-        public void GestaoDeFuncionarios(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
+        public void GestaoDeFuncionarios(string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas,ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
         {
             ConsoleKeyInfo lertecla;
 
@@ -34,7 +34,7 @@ namespace CineTech
             {
                 case ConsoleKey.F1:
                     {
-                        CadastrarFuncionario(spMatrizDeFuncionarios, ref plinhaMatrizFuncionarios);
+                        CadastrarFuncionario(spMatrizUsuariosSenhas,spMatrizDeFuncionarios, ref plinhaMatrizFuncionarios);
                         break;
                     }
                 case ConsoleKey.F2:
@@ -49,14 +49,14 @@ namespace CineTech
                     }
                 case ConsoleKey.F4:
                     {
-                        ConsultarFuncionario(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                        ConsultarFuncionario(pUsuario, pSenha, spMatrizUsuariosSenhas, ref pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
                         break;
 
                     }
                 case ConsoleKey.F5:
                     {
                         Menu metodoparaMenuFuncionarios = new Menu();
-                        metodoparaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                        metodoparaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
                         break;
                     }
             }
@@ -113,7 +113,7 @@ namespace CineTech
 
             return CPF.EndsWith(Digito);
         }
-        public void CadastrarFuncionario(string[,] spMatrizDeFuncionarios, ref int plinhaMatrizFuncionarios)
+        public void CadastrarFuncionario(string [,] spMatrizUsuariosSenhas,string[,] spMatrizDeFuncionarios, ref int plinhaMatrizFuncionarios)
         {
             plinhaMatrizFuncionarios += 1;
             string nome, cpfaValidar, cargo;
@@ -158,9 +158,41 @@ namespace CineTech
             Console.WriteLine("Nome: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 1]);
             Console.WriteLine("CPF: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2]);
             Console.WriteLine("Cargo: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3]);
+            CadastrarUsuarioSenhaFuncionario(spMatrizUsuariosSenhas, spMatrizDeFuncionarios, ref plinhaMatrizFuncionarios);
+
             Console.WriteLine();
             Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de funcionários.");
             Console.ReadKey();
+        }
+        public string[,] CadastrarUsuarioSenhaFuncionario(string[,] spMatrizUsuariosSenhas, string[,] spMatrizDeFuncionarios, ref int plinhaMatrizFuncionarios)
+        {
+            string usuario, senha, codigo, palavraChave;
+
+            Console.WriteLine("Digite o Usuario");
+            usuario = Console.ReadLine();
+            Console.WriteLine("Digite a Senha");
+            senha = Console.ReadLine();
+
+            if(spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3].Equals("Gerente"))
+            {
+                codigo = "2";
+            }
+            else
+            {
+                codigo = "1";
+            }
+            Console.WriteLine("Digite a Palavra Chave");
+            palavraChave = Console.ReadLine();
+
+            for (int IndiceLinhas = 0; IndiceLinhas <spMatrizUsuariosSenhas.GetLength(0); IndiceLinhas++)
+            {
+
+                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 0] = usuario;
+                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 1] = senha;
+                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 2] = codigo;
+                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 3] = palavraChave;
+            }
+            return spMatrizUsuariosSenhas;
         }
         public void EditarFuncionario(ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
         {
@@ -308,7 +340,7 @@ namespace CineTech
                 Console.ReadKey();
             }
         }
-        public void ConsultarFuncionario(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
+        public void ConsultarFuncionario(string pUsuario, string pSenha, string[,] psMatrizUsuariosSenhas, ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
         {
             ConsoleKeyInfo lertecla;
             do
@@ -433,7 +465,7 @@ namespace CineTech
                         }
                     case ConsoleKey.F4:
                         {
-                            GestaoDeFuncionarios(pUsuario, pSenha, spArrayDeLoginDeUsuarios, spArrayDeSenhaDeUsuarios, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                            GestaoDeFuncionarios(pUsuario, pSenha, psMatrizUsuariosSenhas, ref pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
                             break;
                         }
                 }

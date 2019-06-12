@@ -9,7 +9,7 @@ namespace CineTech
     class GestaoCliente
     {
         
-        public void GestaoDeCliente(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, ref int plinhaMatrizClientes, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizComprasFeitas)
+        public void GestaoDeCliente(string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, ref int plinhaMatrizClientes, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizComprasFeitas)
         {
             ConsolePersonalizado Templates = new ConsolePersonalizado();
             ConsoleKeyInfo lertecla;
@@ -36,14 +36,14 @@ namespace CineTech
                     }
                 case ConsoleKey.F4:
                     {
-                        ConsultarCliente(pUsuario,pSenha,spArrayDeLoginDeUsuarios,spArrayDeSenhaDeUsuarios,pTentativasDeLogin,spArrayDeUsuariosBloquiados, ref posicao,spMatrizDeProdutos, ref  plinhaMatrizProdutos, spMatrizDeClientes, ref  plinhaMatrizClientes, ref  plinhaMatrizFuncionarios,spMatrizDeFuncionarios, spMatrizComprasFeitas);
+                        ConsultarCliente(pUsuario,pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin,spArrayDeUsuariosBloquiados, ref posicao,spMatrizDeProdutos, ref  plinhaMatrizProdutos, spMatrizDeClientes, ref  plinhaMatrizClientes, ref  plinhaMatrizFuncionarios,spMatrizDeFuncionarios, spMatrizComprasFeitas);
                         break;
 
                     }
                 case ConsoleKey.F5:
                     {
                         Menu MetodosparaMenuFuncionarios = new Menu();
-                        MetodosparaMenuFuncionarios.MenuFuncionarios(pUsuario,pSenha,spArrayDeLoginDeUsuarios,spArrayDeSenhaDeUsuarios,pTentativasDeLogin,spArrayDeUsuariosBloquiados,ref posicao,spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes, ref plinhaMatrizFuncionarios,spMatrizDeFuncionarios, spMatrizComprasFeitas,ref plinhaMatrizClientes);
+                        MetodosparaMenuFuncionarios.MenuFuncionarios(pUsuario,pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin,spArrayDeUsuariosBloquiados,ref posicao,spMatrizDeProdutos, ref plinhaMatrizProdutos,spMatrizDeClientes, ref plinhaMatrizFuncionarios,spMatrizDeFuncionarios, spMatrizComprasFeitas,ref plinhaMatrizClientes);
                         break;
                     }
             
@@ -328,7 +328,7 @@ namespace CineTech
                 Console.ReadKey();
             }
         }
-        public void ConsultarCliente(string pUsuario, string pSenha, string[] spArrayDeLoginDeUsuarios, string[] spArrayDeSenhaDeUsuarios, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizComprasFeitas)
+        public void ConsultarCliente(string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas, int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizComprasFeitas)
         {
             ConsoleKeyInfo lertecla;
             do
@@ -506,7 +506,7 @@ namespace CineTech
                         }
                     case ConsoleKey.F5:
                         {
-                            GestaoDeCliente(pUsuario,pSenha, spArrayDeLoginDeUsuarios,spArrayDeSenhaDeUsuarios, pTentativasDeLogin,spArrayDeUsuariosBloquiados, ref posicao,spMatrizDeProdutos, ref plinhaMatrizProdutos, ref  plinhaMatrizClientes,spMatrizDeClientes, ref plinhaMatrizFuncionarios,spMatrizDeFuncionarios, spMatrizComprasFeitas);
+                            GestaoDeCliente(pUsuario,pSenha,spMatrizUsuariosSenhas, pTentativasDeLogin,spArrayDeUsuariosBloquiados, ref posicao,spMatrizDeProdutos, ref plinhaMatrizProdutos, ref  plinhaMatrizClientes,spMatrizDeClientes, ref plinhaMatrizFuncionarios,spMatrizDeFuncionarios, spMatrizComprasFeitas);
                             break;
                         }
                 }
