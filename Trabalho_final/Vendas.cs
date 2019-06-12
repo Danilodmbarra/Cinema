@@ -8,7 +8,7 @@ namespace CineTech
 {
     class Vendas
     {
-        public void VenderProdutos(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes, ref int pLinhaMatrizProdutos,string [,]spMatrizDeComprasFeita)
+        public void VenderProdutos(string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes, ref int spLinhaMatrizProdutos,string [,]spMatrizDeComprasFeita,ref int spLinhaMatrizClientes, string[,] pMatrizDeClientes,ref int pLinhasMatrizProdutos, string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas, ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, string[,] spMatrizDeFuncionarios, ref int posicao, ref int plinhaMatrizProdutos, string[] spArrayDeBloquiados, ref int pLinhaMatrizFuncionarios)
         {
             
             string cpf;
@@ -16,13 +16,53 @@ namespace CineTech
             Console.WriteLine("Digite o cpf. XXXXXXXXXXXX");
             cpf = Console.ReadLine();
             int linhaMatrizDeResumo = -1;
-            ConfirmarSeOClienteECadastrado(spMatrizDeClientes,cpf, spMatrizDeProdutos, spMatrizDeClientes, ref pLinhaMatrizProdutos, spMatrizDeComprasFeita);
-            OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes, ref pLinhaMatrizProdutos, linhaMatrizDeResumo, spMatrizDeComprasFeita);
+            ConfirmarSeOClienteECadastrado(pMatrizDeClientes,cpf,spMatrizDeProdutos,spMatrizDeClientes, ref  pLinhasMatrizProdutos,spMatrizDeComprasFeita, ref  spLinhaMatrizClientes,pUsuario, pSenha,spMatrizUsuariosSenhas, ref  pTentativasDeLogin,spArrayDeUsuariosBloquiados, ref  pLinhaMatrizFuncionarios,spMatrizDeFuncionarios, ref posicao, ref  plinhaMatrizProdutos,spArrayDeBloquiados);
+            OperacaoDeVenda(spMatrizDeProdutos, spMatrizDeClientes, ref spLinhaMatrizProdutos, linhaMatrizDeResumo, spMatrizDeComprasFeita);
 
             Console.ReadKey();
 
         }
-        public void OperacaoDeVenda(string[,] spMatrizDeProdutos, string[,] spMatrizClientes, ref int pLinhaMatrizProdutos, int pLinhaMatrizDeResumo,string [,] spMatrizDeComprasFeita)
+        public void ConfirmarSeOClienteECadastrado(string[,] pMatrizDeClientes, string pCpf, string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes, ref int pLinhasMatrizProdutos, string[,] spMatrizDeComprasFeita, ref int pLinhaMatrizClientes, string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas, ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios, ref int posicao, ref int plinhaMatrizProdutos, string[] spArrayDeBloquiados)
+        {
+            ConsoleKeyInfo OpcaoParaCadastrar;
+            GestaoCliente MetodoParaCadastroDeClientes = new GestaoCliente();
+            Menu MetodoParaMenuFuncionarios = new Menu();
+            int posicaoNaMatriz;
+            string[] sArrayCpf = new string[spMatrizDeClientes.GetLength(0)];
+
+            for (int i = 0; i < pMatrizDeClientes.GetLength(0); i++)
+            {
+                sArrayCpf[i] = spMatrizDeClientes[i, 0];
+
+
+            }
+            if (sArrayCpf.Contains(pCpf))
+            {
+                posicaoNaMatriz = Array.IndexOf(sArrayCpf, pCpf);
+                Console.WriteLine("Cliente Cadastrado");
+                Console.WriteLine("Nome: {0}", pMatrizDeClientes[posicaoNaMatriz, 1]);
+                Console.WriteLine("Telefone: {0}", pMatrizDeClientes[posicaoNaMatriz, 2]);
+                Console.WriteLine("Cidade: {0}", pMatrizDeClientes[posicaoNaMatriz, 3]);
+            }
+            else
+            {
+                Console.WriteLine("Cliente nao Cadastrado");
+                Console.WriteLine("Deseja Cadastra-lo?\n [s]Sim \n [n]Nao");
+                OpcaoParaCadastrar = Console.ReadKey();
+
+                if (OpcaoParaCadastrar.Key.Equals(ConsoleKey.S))
+                {
+                    MetodoParaCadastroDeClientes.CadastrarCliente(spMatrizDeClientes, ref pLinhaMatrizClientes);
+                }
+                else if (OpcaoParaCadastrar.Key.Equals(ConsoleKey.N))
+                {
+                    MetodoParaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita, ref pLinhaMatrizClientes);
+                }
+
+                Console.ReadKey();
+            }
+        }
+            public void OperacaoDeVenda(string[,] spMatrizDeProdutos, string[,] spMatrizClientes, ref int pLinhaMatrizProdutos, int pLinhaMatrizDeResumo,string [,] spMatrizDeComprasFeita)
         {
             GestaoProdutos MetodosParaCadastrar = new GestaoProdutos();
             ConsoleKeyInfo OpcaoParaCadastrar;
@@ -100,10 +140,7 @@ namespace CineTech
                     {
                         MetodosParaCadastrar.CadastrarProduto(ref pLinhaMatrizDeResumo, spMatrizDeProdutos,spMatrizDeComprasFeita);
                     }
-                    else if (OpcaoParaCadastrar.Key.Equals(ConsoleKey.N))
-                    {
-                        OperacaoDeVenda(spMatrizDeProdutos, spMatrizClientes, ref pLinhaMatrizDeResumo, pLinhaMatrizDeResumo,spMatrizDeComprasFeita);
-                    }
+                
 
                 }
                 Console.WriteLine("Para adicionar mais um produto aperte enter");
@@ -120,6 +157,7 @@ namespace CineTech
         {
             string horarioDacompra;
             horarioDacompra = Convert.ToString(DateTime.Now);
+            
            
             
             for (int indiceLinhas = pLinhaMatrizDeResumo; indiceLinhas < resumoParcialDacompra.GetLength(1); indiceLinhas++)
@@ -160,9 +198,10 @@ namespace CineTech
         public void ExibirResumoDaCompra(string [,]spMatrizDeProdutos, string[,]spMatrizDeClientes, ref int pLinhaMatrizProdutos,ref int pLinhaMatrizDeResumo, string[,] spMatrizDeComprasFeita, string[,] spResumoParcialDacompra,double pPrecoTotal,double pPrecoParcial)
         {
             Menu MetodosDeInicializacao = new Menu();
-            int SomaTotalDeVendas;
+            double precoTotal;
+            
 
-            OperacaoSomaTotal(spResumoParcialDacompra);
+            precoTotal = OperacaoSomaTotal(spResumoParcialDacompra);
 
             for (int indiceLinhas = 0; indiceLinhas < spResumoParcialDacompra.GetLength(0); indiceLinhas++)
             {
@@ -202,13 +241,23 @@ namespace CineTech
                
             }
 
-            
-            
+            Console.WriteLine("Preco Total R${0} ",precoTotal);
 
         }
-        public void OperacaoSomaTotal(string [,]spResumoParcialDacompra)
+        public double OperacaoSomaTotal(string [,]spResumoParcialDacompra)
         {
-       
+            
+            double [] arrayPrecoParcial = new double[spResumoParcialDacompra.GetLength(0)];
+
+
+            for (int indiceLinhas = 0; indiceLinhas < spResumoParcialDacompra.GetLength(0); indiceLinhas++)
+            {
+                for (int indiceColunas = 0; indiceColunas < spResumoParcialDacompra.GetLength(0); indiceColunas++)
+                {
+                    arrayPrecoParcial[indiceLinhas] = Convert.ToDouble(spResumoParcialDacompra[indiceLinhas, 2]);
+                }
+            }
+            return arrayPrecoParcial.Sum();
   
         }
         public void ListarProdutos(string[,] spMatrizDeProdutos)
@@ -224,43 +273,7 @@ namespace CineTech
                 Console.WriteLine();
             }
         }
-        public void ConfirmarSeOClienteECadastrado(string[,] pMatrizDeClientes, string pCpf, string[,] spMatrizDeProdutos, string[,] spMatrizDeClientes,ref int pLinhasMatrizProdutos,string[,] spMatrizDeComprasFeita)
-        {
-            ConsoleKeyInfo OpcaoParaCadastrar;
-            int posicao;
-            string[] sArrayCpf = new string[spMatrizDeClientes.GetLength(0)];
-
-            for (int i = 0; i < pMatrizDeClientes.GetLength(0); i++)
-            {
-                sArrayCpf[i] = spMatrizDeClientes[i, 0];
-
-
-            }
-            if (sArrayCpf.Contains(pCpf))
-            {
-                posicao = Array.IndexOf(sArrayCpf, pCpf);
-                Console.WriteLine("Cliente Cadastrado");
-                Console.WriteLine("Nome: {0}", pMatrizDeClientes[posicao, 1]);
-                Console.WriteLine("Telefone: {0}", pMatrizDeClientes[posicao, 2]);
-                Console.WriteLine("Cidade: {0}", pMatrizDeClientes[posicao, 3]);
-            }
-            else
-            {
-                Console.WriteLine("Cliente nao Cadastrado");
-                Console.WriteLine("Deseja Cadastra-lo?\n [s]Sim \n [n]Nao");
-                OpcaoParaCadastrar = Console.ReadKey();
-
-                if (OpcaoParaCadastrar.Equals(ConsoleKey.S))
-                {
-                    //CHAMAR CADASTRO
-                }
-                else if (OpcaoParaCadastrar.Equals(ConsoleKey.N))
-                {
-                    VenderProdutos(spMatrizDeProdutos, spMatrizDeClientes,ref pLinhasMatrizProdutos, spMatrizDeComprasFeita);
-                }
-                //AINDA FALTA COLOCAR TELA DOS PRODUTOS,CALCULAR O PRECO DA COMPRA.
-                Console.ReadKey();
-            }
+       
         }
     }
-}
+

@@ -168,12 +168,23 @@ namespace CineTech
         {
             string usuario, senha, codigo, palavraChave;
 
-            Console.WriteLine("Digite o Usuario");
-            usuario = Console.ReadLine();
-            Console.WriteLine("Digite a Senha");
-            senha = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Digite o Usuario");
+                usuario = Console.ReadLine();
+                Console.WriteLine("Digite a Senha");
+                senha = Console.ReadLine();
+                Console.WriteLine("Digite a Palavra Chave");
+                palavraChave = Console.ReadLine();
+                if (usuario.Equals("") || senha.Equals("") || palavraChave.Equals(""))
+                {
+                    Console.WriteLine("Campo Vazio ");
+                    Console.WriteLine("Tente Novamente");
+                }
+            } while (usuario.Equals("") || senha.Equals("") || palavraChave.Equals(""));
 
-            if(spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3].Equals("Gerente"))
+
+            if (spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3].Equals("Gerente"))
             {
                 codigo = "2";
             }
@@ -181,9 +192,7 @@ namespace CineTech
             {
                 codigo = "1";
             }
-            Console.WriteLine("Digite a Palavra Chave");
-            palavraChave = Console.ReadLine();
-
+        
             for (int IndiceLinhas = 0; IndiceLinhas <spMatrizUsuariosSenhas.GetLength(0); IndiceLinhas++)
             {
 
