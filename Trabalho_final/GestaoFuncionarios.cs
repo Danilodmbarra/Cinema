@@ -8,7 +8,7 @@ namespace CineTech
 {
     class GestaoFuncionarios
     {
-        public void GestaoDeFuncionarios(string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas,ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
+        public void GestaoDeFuncionarios(string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas, ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios, string[,] spMatrizDeComprasFeita, ref int pLinhaMatrizClientes)
         {
             ConsoleKeyInfo lertecla;
 
@@ -34,12 +34,12 @@ namespace CineTech
             {
                 case ConsoleKey.F1:
                     {
-                        CadastrarFuncionario(spMatrizUsuariosSenhas,spMatrizDeFuncionarios, ref plinhaMatrizFuncionarios);
+                        CadastrarFuncionario(spMatrizUsuariosSenhas, spMatrizDeFuncionarios, ref plinhaMatrizFuncionarios);
                         break;
                     }
                 case ConsoleKey.F2:
                     {
-                        EditarFuncionario(ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios);
+                        EditarFuncionario(ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizUsuariosSenhas);
                         break;
                     }
                 case ConsoleKey.F3:
@@ -49,14 +49,14 @@ namespace CineTech
                     }
                 case ConsoleKey.F4:
                     {
-                        ConsultarFuncionario(pUsuario, pSenha, spMatrizUsuariosSenhas, ref pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                        ConsultarFuncionario(pUsuario, pSenha, spMatrizUsuariosSenhas, ref pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita, ref pLinhaMatrizClientes);
                         break;
 
                     }
                 case ConsoleKey.F5:
                     {
                         Menu metodoparaMenuFuncionarios = new Menu();
-                        metodoparaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                        metodoparaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita, ref pLinhaMatrizClientes);
                         break;
                     }
             }
@@ -113,10 +113,11 @@ namespace CineTech
 
             return CPF.EndsWith(Digito);
         }
-        public void CadastrarFuncionario(string [,] spMatrizUsuariosSenhas,string[,] spMatrizDeFuncionarios, ref int plinhaMatrizFuncionarios)
+        public void CadastrarFuncionario(string[,] spMatrizUsuariosSenhas, string[,] spMatrizDeFuncionarios, ref int plinhaMatrizFuncionarios)
         {
             plinhaMatrizFuncionarios += 1;
             string nome, cpfaValidar, cargo;
+            string confirma, cpfValidado = "";
             int codigo;
 
 
@@ -151,7 +152,46 @@ namespace CineTech
             Console.Write("Informe o cargo do funcionário: ");
             cargo = Console.ReadLine();
             spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3] = cargo;
+            cargo = Console.ReadLine();
 
+            Console.WriteLine();
+            Console.Write("Deseja confirmar o cadastro do funcionario com as informações acima? (S/N): ");
+            confirma = Console.ReadLine().ToLower();
+
+            if (confirma != "s" && confirma != "n")
+            {
+                do
+                {
+                    Console.WriteLine();
+                    Console.Write("Opção inválida, pressione a tecla 'S' para confirmar o cadastro ou 'N' para cancelá-lo: ");
+                    confirma = Console.ReadLine().ToLower();
+
+                } while (confirma != "s" && confirma != "n");
+            }
+            if (confirma == "s")
+            {
+                spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 0] = codigo.ToString();
+                spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 1] = nome;
+                spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2] = cpfValidado;
+                spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3] = cargo;
+                Console.WriteLine();
+                Console.WriteLine("Funcionário cadastrado com sucesso!");
+                Console.WriteLine("Código de cadastro: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 0]);
+                Console.WriteLine("Nome: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 1]);
+                Console.WriteLine("CPF: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2]);
+                Console.WriteLine("Cargo: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3]);
+                Console.WriteLine();
+                Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de produtos.");
+            }
+            else if (confirma == "n")
+            {
+                plinhaMatrizFuncionarios -= 1;
+                Console.WriteLine();
+                Console.WriteLine("Cadastro de funcionário cancelado.");
+                Console.WriteLine();
+                Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de funcionários.");
+            }
+            Console.ReadKey();
             Console.WriteLine();
             Console.WriteLine("Funcionário cadastrado com sucesso: ");
             Console.WriteLine("Código de cadastro: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 0]);
@@ -166,7 +206,7 @@ namespace CineTech
         }
         public string[,] CadastrarUsuarioSenhaFuncionario(string[,] spMatrizUsuariosSenhas, string[,] spMatrizDeFuncionarios, ref int plinhaMatrizFuncionarios)
         {
-            string usuario, senha, codigo, palavraChave;
+            string usuario, senha, codigo, palavraChave, confirma= "";
 
             do
             {
@@ -193,25 +233,47 @@ namespace CineTech
                 codigo = "1";
             }
         
-            for (int IndiceLinhas = 0; IndiceLinhas <spMatrizUsuariosSenhas.GetLength(0); IndiceLinhas++)
+         
+            if (confirma == "s")
             {
+                for (int IndiceLinhas = 0; IndiceLinhas < spMatrizUsuariosSenhas.GetLength(0); IndiceLinhas++)
+                {
 
-                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 0] = usuario;
-                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 1] = senha;
-                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 2] = codigo;
-                spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 3] = palavraChave;
+                    spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 0] = usuario;
+                    spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 1] = senha;
+                    spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 2] = codigo;
+                    spMatrizUsuariosSenhas[plinhaMatrizFuncionarios, 3] = palavraChave;
+                }
+            }
+            else if (confirma == "n")
+            {
+                
+                Console.WriteLine();
+                Console.WriteLine("Cadastro de funcionário cancelado.");
+                Console.WriteLine();
+                Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de funcionários.");
             }
             return spMatrizUsuariosSenhas;
         }
-        public void EditarFuncionario(ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios)
+        public void EditarFuncionario(ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios, string [,] spMatrizUsuariosSenhas)
         {
             ConsoleKeyInfo lertecla;
-            string nome, cargo, cpfaValidar, editar;
+            string nome, cargo, cpfaValidar, cpfValidado = "", editar, cadastrar, alterar;
             int conteditar = 0;
             Console.Clear();
             Console.WriteLine("==========================================================================");
             Console.WriteLine("          ÁREA DO ADMINISTRADOR - GESTÃO DE FUNCIONÁRIOS - EDITAR         ");
             Console.WriteLine("==========================================================================");
+            Console.WriteLine("Funcionários cadastrados no sistema: ");
+            Console.WriteLine();
+            for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
+            {
+                if (spMatrizDeFuncionarios[i, 0] != null)
+                {
+                    Console.WriteLine("{0} - {1}", spMatrizDeFuncionarios[i, 0], spMatrizDeFuncionarios[i, 1]);
+                }
+            }
+            Console.WriteLine();
             Console.Write("Informe o código do cadastro de funcionário que deseja editar: ");
             editar = Console.ReadLine();
             for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
@@ -233,15 +295,33 @@ namespace CineTech
                     Console.WriteLine();
                     Console.WriteLine("F3) Cargo");
                     lertecla = Console.ReadKey();
-                    Console.WriteLine();
-
                     switch (lertecla.Key)
                     {
                         case ConsoleKey.F1:
                             {
+                                Console.WriteLine();
                                 Console.Write("Informe o novo nome a ser atribuído ao cadastro do funcionário: ");
                                 nome = Console.ReadLine();
-                                spMatrizDeFuncionarios[i, 1] = nome;
+                                Console.WriteLine();
+                                Console.Write("Deseja confirmar a alteração realizada acima? (S/N): ");
+                                alterar = Console.ReadLine().ToLower();
+                                while (alterar != "s" && alterar != "n")
+                                {
+                                    Console.WriteLine();
+                                    Console.Write("Opção inválida, pressione a tecla 'S' para confirmar a alteração acima ou 'N' para cancelar: ");
+                                    alterar = Console.ReadLine().ToLower();
+                                }
+                                if (alterar == "s")
+                                {
+                                    Console.WriteLine();
+                                    spMatrizDeFuncionarios[i, 1] = nome;
+                                    Console.WriteLine("Alteração do cadastro realizada com sucesso.");
+                                }
+                                else if (alterar == "n")
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Alteração do cadastro cancelada.");
+                                }
                                 break;
                             }
                         case ConsoleKey.F2:
@@ -251,7 +331,7 @@ namespace CineTech
                                 cpfaValidar = Console.ReadLine();
                                 if (validarCPF(cpfaValidar))
                                 {
-                                    spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2] = cpfaValidar;
+                                    cpfValidado = cpfaValidar;
                                 }
                                 else
                                 {
@@ -262,14 +342,60 @@ namespace CineTech
                                         cpfaValidar = Console.ReadLine();
                                     } while (validarCPF(cpfaValidar) == false);
                                 }
-                                spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2] = cpfaValidar;
+                                cpfValidado = cpfaValidar;
+                                Console.WriteLine();
+                                Console.Write("Deseja confirmar a alteração realizada acima? (S/N): ");
+                                alterar = Console.ReadLine().ToLower();
+                                while (alterar != "s" && alterar != "n")
+                                {
+                                    Console.WriteLine();
+                                    Console.Write("Opção inválida, pressione a tecla 'S' para confirmar a alteração acima ou 'N' para cancelar: ");
+                                    alterar = Console.ReadLine().ToLower();
+                                }
+                                if (alterar == "s")
+                                {
+                                    Console.WriteLine();
+                                    spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2] = cpfValidado;
+                                    Console.WriteLine("Alteração do cadastro realizada com sucesso.");
+                                }
+                                else if (alterar == "n")
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Alteração do cadastro cancelada.");
+                                }
                                 break;
                             }
                         case ConsoleKey.F3:
                             {
+                                Console.WriteLine();
                                 Console.Write("Informe o novo cargo do funcionário: ");
                                 cargo = Console.ReadLine();
-                                spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3] = cargo;
+                                Console.WriteLine();
+                                Console.Write("Deseja confirmar a alteração realizada acima? (S/N): ");
+                                alterar = Console.ReadLine().ToLower();
+                                while (alterar != "s" && alterar != "n")
+                                {
+                                    Console.WriteLine();
+                                    Console.Write("Opção inválida, pressione a tecla 'S' para confirmar a alteração acima ou 'N' para cancelar: ");
+                                    alterar = Console.ReadLine().ToLower();
+                                }
+                                if (alterar == "s")
+                                {
+                                    Console.WriteLine();
+                                    spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3] = cargo;
+                                    Console.WriteLine("Alteração do cadastro realizada com sucesso.");
+                                }
+                                else if (alterar == "n")
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Alteração do cadastro cancelada.");
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                Console.WriteLine();
+                                Console.Write("Opção inválida.");
                                 break;
                             }
                     }
@@ -277,15 +403,30 @@ namespace CineTech
             }
             if (conteditar == 0)
             {
-                Console.WriteLine("Cadastro de funcionário não encontrado.");
                 Console.WriteLine();
-                Console.WriteLine("Pressione qualquer tecla para retornar ao menu de consulta.");
-                Console.ReadKey();
+                Console.WriteLine("Funcionário não encontrado no sistema. Gostaria de cadastrá-lo? (S/N): ");
+                cadastrar = Console.ReadLine().ToLower();
+                while (cadastrar != "s" && cadastrar != "n")
+                {
+                    Console.WriteLine();
+                    Console.Write("Opção inválida, favor pressionar a tecla 'S' para ser direcionado à tela de cadastro ou 'N' para retornar ao menu de gestão de funcionários: ");
+                    cadastrar = Console.ReadLine().ToLower();
+                }
+                if (cadastrar == "s")
+                {
+                    CadastrarFuncionario(spMatrizUsuariosSenhas, spMatrizDeFuncionarios, ref plinhaMatrizFuncionarios);
+                }
+                else if (cadastrar == "n")
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de funcionários.");
+                    Console.ReadKey();
+                }
             }
             else if (conteditar > 0)
             {
                 Console.WriteLine();
-                Console.WriteLine("Edição do cadastrado realizada com sucesso.\nPressione qualquer tecla para retornar ao menu de gestão de funcionários.");
+                Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de funcionários.");
                 Console.ReadKey();
             }
         }
@@ -297,21 +438,29 @@ namespace CineTech
             Console.WriteLine("==========================================================================");
             Console.WriteLine("        ÁREA DO ADMINISTRADOR - GESTÃO DE FUNCIONÁRIOS - EXCLUIR          ");
             Console.WriteLine("==========================================================================");
-            Console.Write("Informe o código do cadastro de funcionário que deseja excluir: ");
+            Console.WriteLine("Funcionários cadastrados no sistema: ");
+            Console.WriteLine();
+            for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
+            {
+                if (spMatrizDeFuncionarios[i, 0] != null)
+                {
+                    Console.WriteLine("{0} - {1}", spMatrizDeFuncionarios[i, 0], spMatrizDeFuncionarios[i, 1]);
+                }
+            }
+            Console.WriteLine();
+            Console.Write("Informe o código de cadastro do funcionário que deseja excluir: ");
             excluir = Console.ReadLine();
             for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
             {
                 if (spMatrizDeFuncionarios[i, 0] == excluir)
                 {
                     contexcluir++;
-                    Console.WriteLine();
-                    Console.WriteLine();
                     Console.WriteLine("Código de cadastro: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 0]);
                     Console.WriteLine("Nome: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 1]);
                     Console.WriteLine("CPF: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2]);
                     Console.WriteLine("Cargo: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3]);
                     Console.WriteLine();
-                    Console.WriteLine("Deseja mesmo excluir o cadastro demonstrado? (S/N) ");
+                    Console.WriteLine("Deseja mesmo excluir o cadastro demonstrado? (S/N): ");
                     confirmaexcluir = Console.ReadLine().ToLower();
                     if (confirmaexcluir == "s")
                     {
@@ -343,13 +492,14 @@ namespace CineTech
             }
             if (contexcluir == 0)
             {
+                Console.WriteLine();
                 Console.WriteLine("Cadastro de funcionário não encontrado.");
                 Console.WriteLine();
                 Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de gestão de funcionários.");
                 Console.ReadKey();
             }
         }
-        public void ConsultarFuncionario(string pUsuario, string pSenha, string[,] psMatrizUsuariosSenhas, ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
+        public void ConsultarFuncionario(string pUsuario, string pSenha, string[,] spMatrizUsuariosSenhas, ref int pTentativasDeLogin, string[] spArrayDeUsuariosBloquiados, ref int posicao, string[,] spMatrizDeProdutos, ref int plinhaMatrizProdutos, string[,] spMatrizDeClientes, ref int plinhaMatrizFuncionarios, string[,] spMatrizDeFuncionarios,string [,] spMatrizDeComprasFeita,ref int pLinhaMatrizClientes)
         {
             ConsoleKeyInfo lertecla;
             do
@@ -362,11 +512,11 @@ namespace CineTech
                 Console.WriteLine();
                 Console.WriteLine("F1) Consulta por nome");
                 Console.WriteLine();
-                Console.WriteLine("F2) Consulta por CPF.");
+                Console.WriteLine("F2) Consulta por CPF");
                 Console.WriteLine();
-                Console.WriteLine("F3) Listar todos os funcionários cadastrados.");
+                Console.WriteLine("F3) Listar todos os funcionários cadastrados");
                 Console.WriteLine();
-                Console.WriteLine("F4) Retornar à área de gestão de funcionários.");
+                Console.WriteLine("F4) Retornar à área de gestão de funcionários");
 
                 lertecla = Console.ReadKey();
 
@@ -381,9 +531,18 @@ namespace CineTech
                             Console.WriteLine("==========================================================================");
                             Console.WriteLine("    ÁREA DO ADMINISTRADOR - GESTÃO DE FUNCIONÁRIOS - CONSULTA POR NOME    ");
                             Console.WriteLine("==========================================================================");
-                            Console.Write("Informe o nome do funcionário: ");
+                            Console.WriteLine("Funcionários cadastrados no sistema: ");
+                            Console.WriteLine();
+                            for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
+                            {
+                                if (spMatrizDeFuncionarios[i, 0] != null)
+                                {
+                                    Console.WriteLine("{0} - {1}", spMatrizDeFuncionarios[i, 0], spMatrizDeFuncionarios[i, 1]);
+                                }
+                            }
+                            Console.WriteLine();
+                            Console.Write("Informe o nome do funcionário cujo cadastro deseja consultar: ");
                             nome = Console.ReadLine();
-
                             for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
                             {
                                 if (spMatrizDeFuncionarios[i, 1] == nome)
@@ -412,20 +571,29 @@ namespace CineTech
                         }
                     case ConsoleKey.F2:
                         {
-                            string codigoconsulta;
-                            int contcodigo = 0;
+                            string cpfconsulta;
+                            int contcpf = 0;
                             Console.Clear();
                             Console.WriteLine("==========================================================================");
-                            Console.WriteLine("   ÁREA DO ADMINISTRADOR - GESTÃO DE FUNCIONÁRIOS - CONSULTA POR CÓDIGO   ");
+                            Console.WriteLine("     ÁREA DO ADMINISTRADOR - GESTÃO DE FUNCIONÁRIOS - CONSULTA POR CPF    ");
                             Console.WriteLine("==========================================================================");
-                            Console.Write("Informe o codigo do produto: ");
-                            codigoconsulta = Console.ReadLine();
-
+                            Console.WriteLine("Funcionários cadastrados no sistema: ");
+                            Console.WriteLine();
                             for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
                             {
-                                if (spMatrizDeFuncionarios[i, 0] == codigoconsulta)
+                                if (spMatrizDeFuncionarios[i, 0] != null)
                                 {
-                                    contcodigo++;
+                                    Console.WriteLine("{0} - CPF: {1}", spMatrizDeFuncionarios[i, 1], spMatrizDeFuncionarios[i, 2]);
+                                }
+                            }
+                            Console.WriteLine();
+                            Console.Write("Informe o CPF do funcionário cujo cadastro deseja consultar: ");
+                            cpfconsulta = Console.ReadLine();
+                            for (int i = 0; i < spMatrizDeFuncionarios.GetLength(0); i++)
+                            {
+                                if (spMatrizDeFuncionarios[i, 2] == cpfconsulta)
+                                {
+                                    contcpf++;
                                     Console.WriteLine();
                                     Console.WriteLine("Funcionário encontrado!");
                                     Console.WriteLine();
@@ -438,7 +606,7 @@ namespace CineTech
                                     break;
                                 }
                             }
-                            if (contcodigo == 0)
+                            if (contcpf == 0)
                             {
                                 Console.WriteLine();
                                 Console.WriteLine("Funcionário não encontrado.");
@@ -474,7 +642,7 @@ namespace CineTech
                         }
                     case ConsoleKey.F4:
                         {
-                            GestaoDeFuncionarios(pUsuario, pSenha, psMatrizUsuariosSenhas, ref pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios,spMatrizDeComprasFeita,ref pLinhaMatrizClientes);
+                            GestaoDeFuncionarios(pUsuario, pSenha, spMatrizUsuariosSenhas,ref pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita, ref pLinhaMatrizClientes);
                             break;
                         }
                 }

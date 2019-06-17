@@ -80,7 +80,7 @@ namespace CineTech
                 {
                     case ConsoleKey.F1:
                         {
-                            MetodoParaGestaoDeClientes.GestaoDeCliente(pUsuario, pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref pLinhaMatrizProdutos, ref pLinhaMatrizClientes, spMatrizDeClientes, ref pLinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita);
+                            MetodoParaGestaoDeClientes.GestaoDeClientes(pUsuario, pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref pLinhaMatrizProdutos, ref pLinhaMatrizClientes, spMatrizDeClientes, ref pLinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita);
                             
                             break;
                         }

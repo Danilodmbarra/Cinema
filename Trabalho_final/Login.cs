@@ -35,7 +35,9 @@ namespace CineTech
             Console.Write("USUARIO: ");
             usuario = Console.ReadLine();
             Console.Write("SENHA: ");
+            
             senha = Console.ReadLine();
+            
             
           
 
