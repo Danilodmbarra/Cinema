@@ -451,12 +451,12 @@ namespace CineTech
                     contexcluir++;
                     Console.WriteLine();
                     Console.WriteLine();
-                    Console.WriteLine("Código de cadastro: {0}", spMatrizDeClientes[plinhaMatrizClientes, 0]);
-                    Console.WriteLine("Nome: {0}", spMatrizDeClientes[plinhaMatrizClientes, 1]);
-                    Console.WriteLine("CPF: {0}", spMatrizDeClientes[plinhaMatrizClientes, 2]);
-                    Console.WriteLine("Telefone: {0}", spMatrizDeClientes[plinhaMatrizClientes, 3]);
-                    Console.WriteLine("Cidade: {0}", spMatrizDeClientes[plinhaMatrizClientes, 4]);
-                    Console.WriteLine("E-mail: {0}", spMatrizDeClientes[plinhaMatrizClientes, 5]);
+                    Console.WriteLine("Código de cadastro: {0}", spMatrizDeClientes[i, 0]);
+                    Console.WriteLine("Nome: {0}", spMatrizDeClientes[i, 1]);
+                    Console.WriteLine("CPF: {0}", spMatrizDeClientes[i, 2]);
+                    Console.WriteLine("Telefone: {0}", spMatrizDeClientes[i, 3]);
+                    Console.WriteLine("Cidade: {0}", spMatrizDeClientes[i, 4]);
+                    Console.WriteLine("E-mail: {0}", spMatrizDeClientes[i, 5]);
                     Console.WriteLine();
                     Console.WriteLine("Deseja mesmo excluir o cadastro demonstrado? (S/N) ");
                     confirmaexcluir = Console.ReadLine().ToLower();
@@ -464,12 +464,12 @@ namespace CineTech
                     {
                         excluircodigo = Convert.ToInt32(excluir);
 
-                        spMatrizDeClientes[excluircodigo, 0] = "-33";
-                        spMatrizDeClientes[excluircodigo, 1] = "-33";
-                        spMatrizDeClientes[excluircodigo, 2] = "-33";
-                        spMatrizDeClientes[excluircodigo, 3] = "-33";
-                        spMatrizDeClientes[excluircodigo, 4] = "-33";
-                        spMatrizDeClientes[excluircodigo, 5] = "-33";
+                        spMatrizDeClientes[excluircodigo, 0] = null;
+                        spMatrizDeClientes[excluircodigo, 1] = null;
+                        spMatrizDeClientes[excluircodigo, 2] = null;
+                        spMatrizDeClientes[excluircodigo, 3] = null;
+                        spMatrizDeClientes[excluircodigo, 4] = null;
+                        spMatrizDeClientes[excluircodigo, 5] = null;
                         Console.WriteLine();
                         Console.WriteLine("Cadastro excluído.");
                         Console.WriteLine("Pressione qualquer tecla para retornar ao menu de gestão de clientes.");

@@ -22,3 +22,10 @@ C:\Users\Oscar Alho\source\repos\Cinema-master\Trabalho_final\obj\Debug\Trabalho
 C:\Users\Oscar Alho\source\repos\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.exe.config
 C:\Users\Oscar Alho\source\repos\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.exe
 C:\Users\Oscar Alho\source\repos\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.pdb
+D:\Leo\My Documents\Visual Studio 2017\Codes\Trabalho Final\Cinema-master\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.exe.config
+D:\Leo\My Documents\Visual Studio 2017\Codes\Trabalho Final\Cinema-master\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.exe
+D:\Leo\My Documents\Visual Studio 2017\Codes\Trabalho Final\Cinema-master\Cinema-master\Trabalho_final\bin\Debug\Trabalho_final.pdb
+D:\Leo\My Documents\Visual Studio 2017\Codes\Trabalho Final\Cinema-master\Cinema-master\Trabalho_final\obj\Debug\CineTech.csprojAssemblyReference.cache
+D:\Leo\My Documents\Visual Studio 2017\Codes\Trabalho Final\Cinema-master\Cinema-master\Trabalho_final\obj\Debug\CineTech.csproj.CoreCompileInputs.cache
+D:\Leo\My Documents\Visual Studio 2017\Codes\Trabalho Final\Cinema-master\Cinema-master\Trabalho_final\obj\Debug\Trabalho_final.exe
+D:\Leo\My Documents\Visual Studio 2017\Codes\Trabalho Final\Cinema-master\Cinema-master\Trabalho_final\obj\Debug\Trabalho_final.pdb

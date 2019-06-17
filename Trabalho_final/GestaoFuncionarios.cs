@@ -55,8 +55,8 @@ namespace CineTech
                     }
                 case ConsoleKey.F5:
                     {
-                        Menu metodoparaMenuFuncionarios = new Menu();
-                        metodoparaMenuFuncionarios.MenuFuncionarios(pUsuario, pSenha, spMatrizUsuariosSenhas, pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita, ref pLinhaMatrizClientes);
+                        Menu metodoparaMenuAdministracao = new Menu();
+                        metodoparaMenuAdministracao.MenuAdministracao(pUsuario, pSenha, spMatrizUsuariosSenhas, ref pTentativasDeLogin, spArrayDeUsuariosBloquiados, ref posicao, spMatrizDeProdutos, ref plinhaMatrizProdutos, spMatrizDeClientes, ref plinhaMatrizFuncionarios, spMatrizDeFuncionarios, spMatrizDeComprasFeita, ref pLinhaMatrizClientes);
                         break;
                     }
             }
@@ -455,10 +455,10 @@ namespace CineTech
                 if (spMatrizDeFuncionarios[i, 0] == excluir)
                 {
                     contexcluir++;
-                    Console.WriteLine("Código de cadastro: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 0]);
-                    Console.WriteLine("Nome: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 1]);
-                    Console.WriteLine("CPF: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 2]);
-                    Console.WriteLine("Cargo: {0}", spMatrizDeFuncionarios[plinhaMatrizFuncionarios, 3]);
+                    Console.WriteLine("Código de cadastro: {0}", spMatrizDeFuncionarios[i, 0]);
+                    Console.WriteLine("Nome: {0}", spMatrizDeFuncionarios[i, 1]);
+                    Console.WriteLine("CPF: {0}", spMatrizDeFuncionarios[i, 2]);
+                    Console.WriteLine("Cargo: {0}", spMatrizDeFuncionarios[i, 3]);
                     Console.WriteLine();
                     Console.WriteLine("Deseja mesmo excluir o cadastro demonstrado? (S/N): ");
                     confirmaexcluir = Console.ReadLine().ToLower();

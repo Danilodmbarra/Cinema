@@ -15,17 +15,58 @@ namespace CineTech
             string[] sArrayDeUsuariosBloqueados = new string[100];
 
             string[,] sMatrizUsuariosSenhas = { { "Danilo", "1234", "1", "gato" }, { "Leonardo", "1234", "2", "pc" }, { "Halisson", "1234", "2", "pc" }, { "Guilherme", "1234", "2", "pc" }, { "Eduardo", "1234", "2", "pc" } };
-           
-            string[,] sMatrizDeProdutos =
-            { {"0", "Bala Chita", "0.10", "150","Balas mastigáveis nos sabores sortidos abacaxi, framboesa, uva e menta."},
-            { "1", "Água Mineral", "2.50", "200","Garrafa contendo 500 ml de água mineral."},
-            { "2", "Pipoca Pequena","8.00","50","Embalagem pequena de pipoca salgada, doce ou mista."} };
 
-            string[,] sMatrizDeFuncionarios =
-            { { "0", "Nicolas","04899851384","Faxineiro" }, { "1", "Jurema","07895647892", "Vendedora"}, { "2",  "Fabiana","01256987632","Gerente"} };
+            string[,] sMatrizDeProdutos = new string[100, 5];
+            sMatrizDeProdutos[0, 0] = "0";
+            sMatrizDeProdutos[0, 1] = "Bala Chita";
+            sMatrizDeProdutos[0, 2] = "0.10";
+            sMatrizDeProdutos[0, 3] = "150";
+            sMatrizDeProdutos[0, 4] = "Balas mastigáveis nos sabores sortidos abacaxi, framboesa, uva e menta.";
+            sMatrizDeProdutos[1, 0] = "1";
+            sMatrizDeProdutos[1, 1] = "Água Mineral";
+            sMatrizDeProdutos[1, 2] = "2.50";
+            sMatrizDeProdutos[1, 3] = "200";
+            sMatrizDeProdutos[1, 4] = "Garrafa contendo 500 ml de água mineral.";
+            sMatrizDeProdutos[2, 0] = "2";
+            sMatrizDeProdutos[2, 1] = "Pipoca Pequena";
+            sMatrizDeProdutos[2, 2] = "8.00";
+            sMatrizDeProdutos[2, 3] = "50";
+            sMatrizDeProdutos[2, 4] = "Embalagem pequena de pipoca salgada, doce ou mista.";
 
-            string[,] sMatrizDeClientes =
-            { {"0","João","08434858624","(31)986541247","Belo Horizonte/MG","joaozinhobh@hotmail.com"},{"1","Priscila","07898412478","(37)987415784","Pará de Minas/MG","priscilapdm@gmail.com"},{"2","Lucas","07453125872","(31)984655147","Sete Lagoas/MG","lukitadagalera@outlook.com" } };
+            string[,] sMatrizDeFuncionarios = new string[100, 4];
+            sMatrizDeFuncionarios[0, 0] = "0";
+            sMatrizDeFuncionarios[0, 1] = "Nicolas";
+            sMatrizDeFuncionarios[0, 2] = "04899851384";
+            sMatrizDeFuncionarios[0, 3] = "Faxineiro";
+            sMatrizDeFuncionarios[1, 0] = "1";
+            sMatrizDeFuncionarios[1, 1] = "Jurema";
+            sMatrizDeFuncionarios[1, 2] = "07895647892";
+            sMatrizDeFuncionarios[1, 3] = "Vendedora";
+            sMatrizDeFuncionarios[2, 0] = "2";
+            sMatrizDeFuncionarios[2, 1] = "Fabiana";
+            sMatrizDeFuncionarios[2, 2] = "01256987632";
+            sMatrizDeFuncionarios[2, 3] = "Gerente";
+
+
+            string[,] sMatrizDeClientes = new string[100, 6];
+            sMatrizDeClientes[0, 0] = "0";
+            sMatrizDeClientes[0, 1] = "João";
+            sMatrizDeClientes[0, 2] = "08434858624";
+            sMatrizDeClientes[0, 3] = "(31)986541247";
+            sMatrizDeClientes[0, 4] = "Belo Horizonte/MG";
+            sMatrizDeClientes[0, 5] = "joaozinhobh@hotmail.com";
+            sMatrizDeClientes[1, 0] = "1";
+            sMatrizDeClientes[1, 1] = "Priscila";
+            sMatrizDeClientes[1, 2] = "07898412478";
+            sMatrizDeClientes[1, 3] = "(37)987415784";
+            sMatrizDeClientes[1, 4] = "Pará de Minas/MG";
+            sMatrizDeClientes[1, 5] = "priscilapdm@gmail.com";
+            sMatrizDeClientes[2, 0] = "2";
+            sMatrizDeClientes[2, 1] = "Lucas";
+            sMatrizDeClientes[2, 2] = "07453125872";
+            sMatrizDeClientes[2, 3] = "(31)984655147";
+            sMatrizDeClientes[2, 4] = "Sete Lagoas/MG";
+            sMatrizDeClientes[2, 5] = "lukitadagalera@outlook.com";
 
             string[,] sMatrizDeComprasFeita = new string[200, 5];
             
